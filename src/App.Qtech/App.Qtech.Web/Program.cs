@@ -5,6 +5,7 @@ using Autofac;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using App.Qtech.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var migrationAssembly = Assembly.GetExecutingAssembly();

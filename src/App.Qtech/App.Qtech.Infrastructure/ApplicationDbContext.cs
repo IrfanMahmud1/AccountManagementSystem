@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
-namespace App.Qtech.Web.Data
+namespace App.Qtech.Infrastructure
 {
     public class ApplicationDbContext : IdentityDbContext
     {
