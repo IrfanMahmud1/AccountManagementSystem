@@ -1,4 +1,4 @@
-﻿using App.Qtech.Infrastructure;
+﻿using App.Qtech.Infrastructure.Data;
 using Autofac;
 using System.ComponentModel;
 
