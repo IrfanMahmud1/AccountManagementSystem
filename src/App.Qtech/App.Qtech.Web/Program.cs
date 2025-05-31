@@ -9,6 +9,7 @@ using App.Qtech.Infrastructure.Data;
 using App.Qtech.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
+using App.Qtech.Infrastructure.Seeds;
 
 
 var configuration = new ConfigurationBuilder()
@@ -48,6 +49,14 @@ try
     builder.Services.AddAuthorization();
 
     var app = builder.Build();
+
+    #region UserSeed configuration
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        await UserSeed.SeedUserAsync(services);
+    }
+    #endregion
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
