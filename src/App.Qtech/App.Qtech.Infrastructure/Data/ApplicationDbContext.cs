@@ -1,4 +1,5 @@
 ﻿using App.Qtech.Infrastructure.Identity;
+using App.Qtech.Infrastructure.Seeds;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -25,6 +26,7 @@ namespace App.Qtech.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationRole>().HasData(RoleSeed.GetRoles());
             base.OnModelCreating(builder);
         }
     }
