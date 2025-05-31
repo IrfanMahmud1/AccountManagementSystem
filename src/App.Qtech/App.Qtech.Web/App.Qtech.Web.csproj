@@ -8,14 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Identity\**" />
-    <Content Remove="Areas\Identity\**" />
-    <EmbeddedResource Remove="Areas\Identity\**" />
-    <None Remove="Areas\Identity\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="appsettings.json~RF17b25a15.TMP" />
+    <None Remove="Pages\Account\Logout.cshtml~RF13b56be.TMP" />
+    <None Remove="Pages\Account\Logout.cshtml~RF1433044.TMP" />
+    <None Remove="Pages\Account\Logout.cshtml~RF14e0585.TMP" />
     <None Remove="WebModule.cs~RF17c21619.TMP" />
   </ItemGroup>
 
