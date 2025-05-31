@@ -8,9 +8,21 @@ using System.Reflection;
 using App.Qtech.Infrastructure.Data;
 using App.Qtech.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using Serilog;
 
+
+var configuration = new ConfigurationBuilder()
+             .SetBasePath(Directory.GetCurrentDirectory())
+             .AddJsonFile("appsettings.json")
+             .Build();
+
+Log.Logger = new LoggerConfiguration()
+           .ReadFrom.Configuration(configuration)
+           .CreateBootstrapLogger();
 try
 {
+    Log.Information("Application Starting...... ");
+
     var builder = WebApplication.CreateBuilder(args);
     var migrationAssembly = (typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName().Name ?? throw new InvalidOperationException("Migration assembly name not found."));
     // Add services to the container.
@@ -59,13 +71,14 @@ try
     app.MapRazorPages()
        .WithStaticAssets();
 
-    app.Run();
+    Log.Information("Application Started...... ");
+    await app.RunAsync();
 }
 catch (Exception ex)
 {
-   
+    Log.Fatal(ex, "Application Crashed");
 }
 finally
 {
-
+    await Log.CloseAndFlushAsync();
 }
