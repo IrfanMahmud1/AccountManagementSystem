@@ -28,4 +28,8 @@
     <ProjectReference Include="..\App.Qtech.Infrastructure\App.Qtech.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\" />
+  </ItemGroup>
+
 </Project>

@@ -2,30 +2,36 @@ using App.Qtech.Web;
 using App.Qtech.Web.Data;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
-using Microsoft.AspNetCore.Identity;
+using App.Qtech.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-var migrationAssembly = Assembly.GetExecutingAssembly();
+var migrationAssembly = (typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName().Name ?? throw new InvalidOperationException("Migration assembly name not found."));
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+#region Identity Configuration
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+#endregion
 #region Autofac Configuration
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule(new WebModule(connectionString, migrationAssembly.FullName));
+    containerBuilder.RegisterModule(new WebModule(connectionString, migrationAssembly));
 });
 #endregion
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
