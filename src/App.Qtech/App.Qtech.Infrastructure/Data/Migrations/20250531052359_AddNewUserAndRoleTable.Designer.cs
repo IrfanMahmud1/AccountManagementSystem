@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Qtech.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250529194332_AddNewUserAndRoleTable")]
+    [Migration("20250531052359_AddNewUserAndRoleTable")]
     partial class AddNewUserAndRoleTable
     {
         /// <inheritdoc />

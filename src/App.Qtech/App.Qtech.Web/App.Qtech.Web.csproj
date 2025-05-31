@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\**" />
+    <Content Remove="Areas\Identity\**" />
+    <EmbeddedResource Remove="Areas\Identity\**" />
+    <None Remove="Areas\Identity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json~RF17b25a15.TMP" />
     <None Remove="WebModule.cs~RF17c21619.TMP" />
   </ItemGroup>
@@ -30,6 +37,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Qtech.Infrastructure\App.Qtech.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\" />
   </ItemGroup>
 
 </Project>
