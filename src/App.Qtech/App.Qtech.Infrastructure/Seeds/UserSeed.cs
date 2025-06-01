@@ -30,6 +30,7 @@ namespace App.Qtech.Infrastructure.Seeds
             try
             {
                 // Ensure roles exist
+                var x = 1;
                 foreach (var roleName in new[] { adminRoleName, accountantRoleName })
                 {
                     if (!await roleManager.RoleExistsAsync(roleName))
@@ -37,7 +38,8 @@ namespace App.Qtech.Infrastructure.Seeds
                         var role = new ApplicationRole
                         {
                             Name = roleName,
-                            NormalizedName = roleName.ToUpper()
+                            NormalizedName = roleName.ToUpper(),
+                            ConcurrencyStamp = new DateTime(2025, 5, 31, 1, 2, x++).ToString(),
                         };
 
                         var roleResult = await roleManager.CreateAsync(role);

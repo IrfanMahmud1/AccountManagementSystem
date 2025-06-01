@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Qtech.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250531055532_SeedRoles")]
+    [Migration("20250601070822_SeedRoles")]
     partial class SeedRoles
     {
         /// <inheritdoc />
