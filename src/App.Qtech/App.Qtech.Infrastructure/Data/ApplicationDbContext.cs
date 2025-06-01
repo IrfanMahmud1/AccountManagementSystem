@@ -1,4 +1,5 @@
-﻿using App.Qtech.Infrastructure.Identity;
+﻿using App.Qtech.Domain.Entities;
+using App.Qtech.Infrastructure.Identity;
 using App.Qtech.Infrastructure.Seeds;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace App.Qtech.Infrastructure.Data
 
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
+        public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
         public ApplicationDbContext(string connectionString, string migrationAssembly)
         {
             _connectionString = connectionString;
