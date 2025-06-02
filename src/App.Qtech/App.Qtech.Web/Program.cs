@@ -47,7 +47,6 @@ try
 
     builder.Services.AddRazorPages();
     builder.Services.AddAuthorization();
-
     var app = builder.Build();
 
     #region UserSeed configuration
