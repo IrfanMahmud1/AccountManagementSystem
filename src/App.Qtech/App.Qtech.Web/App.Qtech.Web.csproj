@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="appsettings.json~RF17b25a15.TMP" />
     <None Remove="Areas\Admin\Pages\Dashboard\Index.cshtml.cs~RFb782c18.TMP" />
+    <None Remove="Areas\Admin\Pages\Dashboard\Index.cshtml.cs~RFb879aa8.TMP" />
     <None Remove="Areas\Admin\Pages\_ViewImports.cshtml~RFb53b2ff.TMP" />
     <None Remove="Pages\Account\Logout.cshtml~RF13b56be.TMP" />
     <None Remove="Pages\Account\Logout.cshtml~RF1433044.TMP" />
@@ -34,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\App.Qtech.Domain\App.Qtech.Domain.csproj" />
     <ProjectReference Include="..\App.Qtech.Infrastructure\App.Qtech.Infrastructure.csproj" />
   </ItemGroup>
 
