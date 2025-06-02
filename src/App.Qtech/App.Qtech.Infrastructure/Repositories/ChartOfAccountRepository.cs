@@ -18,7 +18,12 @@ namespace App.Qtech.Infrastructure.Repositories
         {
             _context = context;
         }
-
+        public async Task<List<ChartOfAccount>> GetAllAsync()
+        {
+            return await _context.ChartOfAccounts
+                .FromSqlRaw("EXEC sp_ManageChartOfAccounts @Action='SELECT'")
+                .ToListAsync();
+        }
         public async Task AddAsync(ChartOfAccount account)
         {
             var sql = "EXEC sp_ManageChartOfAccounts @Action='INSERT', @Name={0}, @ParentId={1}, @AccountType={2}, @IsActive={3}";
