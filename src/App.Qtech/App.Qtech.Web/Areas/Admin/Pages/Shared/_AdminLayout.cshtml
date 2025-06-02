@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/App.Qtech.Web.styles.css" asp-append-version="true" />
+    <style>
+        .content-area {
+            min-height: 500px;
+        }
+
+        .btn {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .bg-light {
+            border-right: 1px solid #dee2e6;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -34,7 +48,24 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <!-- 80% width container -->
+                    <div class="row">
+                        <!-- Left Column - 20% -->
+                        <div class="col-2 bg-light p-3">
+                            <div class="d-grid gap-2">
+                                <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+                                <a href="/reports" class="btn btn-secondary">Reports</a>
+                                <a href="/settings" class="btn btn-success">Settings</a>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - 80% -->
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
