@@ -9,9 +9,9 @@ namespace App.Qtech.Domain.Repositories
 {
     public interface IChartOfAccountRepository
     {
-        Task<List<ChartOfAccount>> GetAllAsync();
+        //Task<List<ChartOfAccount>> GetAllAsync();
         Task AddAsync(ChartOfAccount account);
-        Task UpdateAsync(ChartOfAccount account);
-        Task DeleteAsync(int id);
+        //Task UpdateAsync(ChartOfAccount account);
+        //Task DeleteAsync(int id);
     }
 }

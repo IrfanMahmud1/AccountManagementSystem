@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Repositories\IChartOfAccountRepository.cs~RFaf79e2e.TMP" />
+  </ItemGroup>
+
 </Project>
