@@ -47,7 +47,7 @@ namespace App.Qtech.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChartOfAccounts");
+                    b.ToTable("ChartOfAccounts", (string)null);
                 });
 
             modelBuilder.Entity("App.Qtech.Infrastructure.Identity.ApplicationRole", b =>

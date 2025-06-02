@@ -1,4 +1,8 @@
-﻿using App.Qtech.Infrastructure.Data;
+﻿using App.Qtech.Application.Services;
+using App.Qtech.Domain.Repositories;
+using App.Qtech.Domain.Services;
+using App.Qtech.Infrastructure.Data;
+using App.Qtech.Infrastructure.Repositories;
 using Autofac;
 using System.ComponentModel;
 
@@ -20,6 +24,10 @@ namespace App.Qtech.Web
              .WithParameter("connectionString", _connectionString)
              .WithParameter("migrationAssembly", _migrationAssembly)
              .InstancePerLifetimeScope();
+            builder.RegisterType<ChartOfAccountRepository>().As<IChartOfAccountRepository>()
+                .InstancePerLifetimeScope();
+             builder.RegisterType<ChartOfAccountService>().As<IChartOfAccountService>()
+                .InstancePerLifetimeScope();
             base.Load(builder);
         }
     }

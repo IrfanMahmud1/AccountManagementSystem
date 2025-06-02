@@ -21,8 +21,8 @@ namespace App.Qtech.Infrastructure.Repositories
         public async Task<List<ChartOfAccount>> GetAllAsync()
         {
             return await _context.ChartOfAccounts
-                .FromSqlRaw("EXEC sp_ManageChartOfAccounts @Action='SELECT'")
-                .ToListAsync();
+            .FromSqlRaw("EXEC sp_ManageChartOfAccounts @Action='SELECT'")
+            .ToListAsync();
         }
         public async Task AddAsync(ChartOfAccount account)
         {
