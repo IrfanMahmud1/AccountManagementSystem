@@ -9,6 +9,7 @@ namespace App.Qtech.Domain.Services
 {
     public interface IChartOfAccountService
     {
+        Task<ChartOfAccount> GetAccountByIdAsync(Guid id);
         Task<List<ChartOfAccount>> GetAllAccountsAsync();
         Task AddAccountAsync(ChartOfAccount account);
         Task UpdateAccountAsync(ChartOfAccount account);
