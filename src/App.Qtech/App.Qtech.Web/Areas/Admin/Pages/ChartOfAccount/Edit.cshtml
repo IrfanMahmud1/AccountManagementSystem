@@ -1,16 +1,17 @@
 ﻿@page
-@model App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount.CreateModel
+@model App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount.EditModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
+@{
+    ViewData["Title"] = "Edit";
+}
 
-<h1>Create ChartOfAccount</h1>
-    <hr />
-    <div class="row">
+<h1>Edit ChartOfAccount</h1>
+<hr />
+<div class="row">
     <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ChartOfAccount.Id" />
             <div class="form-group">
                 <label asp-for="ChartOfAccount.Name" class="control-label"></label>
                 <input asp-for="ChartOfAccount.Name" class="form-control" />
@@ -43,15 +44,19 @@
                 <label class="form-check-label" asp-for="ChartOfAccount.IsActive"></label>
                 <span asp-validation-for="ChartOfAccount.IsActive" class="text-danger"></span>
             </div>
-
-            <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+            <div class="form-group">
+                
+                <label asp-for="ChartOfAccount.CreatedAt" class="control-label"></label>
+                <input asp-for="ChartOfAccount.CreatedAt" class="form-control" />
+                <span asp-validation-for="ChartOfAccount.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

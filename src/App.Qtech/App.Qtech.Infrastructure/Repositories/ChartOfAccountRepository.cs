@@ -78,6 +78,34 @@ namespace App.Qtech.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public async Task<ChartOfAccount?> GetByIdAsync(Guid id)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            using var command = new SqlCommand("sp_manageChartAccounts", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.AddWithValue("@Operation", ChartOfAccountAction.Get.ToString());
+            command.Parameters.AddWithValue("@Id", id);
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new ChartOfAccount
+                {
+                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    ParentId = reader.IsDBNull(reader.GetOrdinal("ParentId")) ? null : reader.GetGuid(reader.GetOrdinal("ParentId")),
+                    AccountType = reader.GetString(reader.GetOrdinal("AccountType")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
+                };
+            }
+
+            return null;
+        }
         public async Task<List<ChartOfAccount>> GetAllAsync()
         {
             var accounts = new List<ChartOfAccount>();

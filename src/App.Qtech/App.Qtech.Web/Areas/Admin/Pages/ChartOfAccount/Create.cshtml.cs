@@ -18,7 +18,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
         [BindProperty]
         public App.Qtech.Domain.Entities.ChartOfAccount ChartOfAccount { get; set; } = default!;
-        public List<App.Qtech.Domain.Entities.ChartOfAccount> ParentAccounts { get; set; }
+        public List<App.Qtech.Domain.Entities.ChartOfAccount> ParentAccounts { get; set; } = new List<App.Qtech.Domain.Entities.ChartOfAccount>();
         public CreateModel(IChartOfAccountService chartOfAccountService, ILogger<CreateModel> logger)
         {
             _chartOfAccountService = chartOfAccountService;
