@@ -47,7 +47,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                 try
                 {
                     await _chartOfAccountService.AddAccountAsync(ChartOfAccount);
-
+                    
                     return RedirectToPage("./Index");
                 }
                 catch (Exception ex)

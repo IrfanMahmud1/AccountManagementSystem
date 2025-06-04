@@ -55,13 +55,13 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(App.Qtech.Domain.Entities.ChartOfAccount model)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _chartOfAccountService.UpdateAccountAsync(model);
+                    await _chartOfAccountService.UpdateAccountAsync(ChartOfAccount);
 
                     return RedirectToPage("./Index");
                 }
