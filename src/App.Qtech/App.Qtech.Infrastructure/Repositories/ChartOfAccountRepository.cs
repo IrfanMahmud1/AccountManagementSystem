@@ -152,6 +152,27 @@ namespace App.Qtech.Infrastructure.Repositories
             var account = new ChartOfAccount { Id = id };
             return await ExecuteNonQuery(account, ChartOfAccountAction.Delete);
         }
+        public async Task<int> GetChildCountByParentIdAsync(Guid id)
+        {
+            int count = 0;
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = new SqlCommand("sp_countChildAccountsByParentId", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Id", id);
+
+                await connection.OpenAsync();
+
+                var result = await command.ExecuteScalarAsync();
+                if (result != null && result != DBNull.Value)
+                {
+                    count = Convert.ToInt32(result);
+                }
+            }
+
+            return count;
+        }
 
         private async Task<bool> ExecuteNonQuery(ChartOfAccount account, ChartOfAccountAction operation)
         {
