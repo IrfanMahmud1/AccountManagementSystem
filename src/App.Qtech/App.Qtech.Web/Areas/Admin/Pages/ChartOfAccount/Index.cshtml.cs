@@ -14,17 +14,25 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
     public class IndexModel : PageModel
     {
         private readonly IChartOfAccountService _chartOfAccountService;
-
-        public IndexModel(IChartOfAccountService chartOfAccountService)
+        private readonly ILogger<IndexModel> _logger;
+        public IndexModel(IChartOfAccountService chartOfAccountService, ILogger<IndexModel> logger)
         {
             _chartOfAccountService = chartOfAccountService;
+            _logger = logger;
         }
 
         public IList<App.Qtech.Domain.Entities.ChartOfAccount> ChartOfAccount { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            ChartOfAccount = await _chartOfAccountService.GetAllAccountsAsync();
+            try
+            {
+                ChartOfAccount = await _chartOfAccountService.GetAllAccountsAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve parent accounts");
+            }
         }
     }
 }

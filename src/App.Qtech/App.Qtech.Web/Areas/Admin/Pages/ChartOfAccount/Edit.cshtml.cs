@@ -27,19 +27,29 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
         public List<App.Qtech.Domain.Entities.ChartOfAccount> ParentAccounts { get; set; } = new List<App.Qtech.Domain.Entities.ChartOfAccount>();
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            if (id == null)
+            if (Guid.Empty == id)
             {
                 return NotFound();
             }
 
-            var chartofaccount =  await _context.ChartOfAccounts.FirstOrDefaultAsync(m => m.Id == id);
-            if (chartofaccount == null)
+            try
             {
-                return NotFound();
+                var chartofaccount = await _chartOfAccountService.GetAccountByIdAsync(id);
+                var parentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+                if (chartofaccount == null)
+                {
+                    return NotFound();
+                }
+                ChartOfAccount = chartofaccount;
+                ParentAccounts = parentAccounts;
             }
-            ChartOfAccount = chartofaccount;
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve account");
+                return RedirectToPage("./Error");
+            }
             return Page();
         }
 
@@ -60,13 +70,16 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                     _logger.LogInformation(ex, "Faild to update account");
                 }
             }
-            ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+            try
+            {
+                ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve parent accounts");
+                return RedirectToPage("./Error");
+            }
             return Page();
-        }
-
-        private bool ChartOfAccountExists(Guid id)
-        {
-            return _context.ChartOfAccounts.Any(e => e.Id == id);
         }
     }
 }

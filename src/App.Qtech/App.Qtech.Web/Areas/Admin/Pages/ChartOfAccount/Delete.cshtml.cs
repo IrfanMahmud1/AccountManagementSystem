@@ -12,51 +12,61 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
     public class DeleteModel : PageModel
     {
-        private readonly App.Qtech.Infrastructure.Data.ApplicationDbContext _context;
+        private readonly ILogger<EditModel> _logger;
+        private readonly App.Qtech.Domain.Services.IChartOfAccountService _chartOfAccountService;
 
-        public DeleteModel(App.Qtech.Infrastructure.Data.ApplicationDbContext context)
+        public DeleteModel(ILogger<EditModel> logger, Domain.Services.IChartOfAccountService chartOfAccountService)
         {
-            _context = context;
+            _logger = logger;
+            _chartOfAccountService = chartOfAccountService;
         }
 
         [BindProperty]
         public App.Qtech.Domain.Entities.ChartOfAccount ChartOfAccount { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            if (id == null)
+            if (Guid.Empty == id)
             {
                 return NotFound();
             }
 
-            var chartofaccount = await _context.ChartOfAccounts.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (chartofaccount is not null)
+            try
             {
+                var chartofaccount = await _chartOfAccountService.GetAccountByIdAsync(id);
+                if (chartofaccount == null)
+                {
+                    return NotFound();
+                }
                 ChartOfAccount = chartofaccount;
-
-                return Page();
             }
-
-            return NotFound();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve account");
+                return RedirectToPage("./Error");
+            }
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid? id)
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
-            if (id == null)
+            if (Guid.Empty == id)
             {
                 return NotFound();
             }
 
-            var chartofaccount = await _context.ChartOfAccounts.FindAsync(id);
-            if (chartofaccount != null)
+            try
             {
-                ChartOfAccount = chartofaccount;
-                _context.ChartOfAccounts.Remove(ChartOfAccount);
-                await _context.SaveChangesAsync();
+                await _chartOfAccountService.DeleteAccountAsync(id);
+
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex, "Faild to delete account");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

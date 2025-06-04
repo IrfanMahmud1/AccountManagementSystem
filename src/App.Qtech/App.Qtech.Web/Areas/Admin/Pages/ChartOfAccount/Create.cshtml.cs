@@ -27,7 +27,15 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
         public async Task<IActionResult> OnGet()
         {
-            ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+            try
+            {
+                ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve parent accounts");
+                return RedirectToPage("./Error");
+            }
             return Page();
         }
 
@@ -47,7 +55,15 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                     _logger.LogInformation(ex, "Faild to create account");
                 }
             }
-            ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+            try
+            {
+                ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve parent accounts");
+                return RedirectToPage("./Error");
+            }
             return Page();
         }
     }

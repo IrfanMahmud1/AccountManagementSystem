@@ -81,12 +81,12 @@ namespace App.Qtech.Infrastructure.Repositories
         public async Task<ChartOfAccount?> GetByIdAsync(Guid id)
         {
             using var connection = new SqlConnection(_connectionString);
-            using var command = new SqlCommand("sp_manageChartAccounts", connection)
+            using var command = new SqlCommand("sp_ManageChartOfAccounts", connection)
             {
                 CommandType = CommandType.StoredProcedure
             };
 
-            command.Parameters.AddWithValue("@Operation", ChartOfAccountAction.Get.ToString());
+            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.Get.ToString());
             command.Parameters.AddWithValue("@Id", id);
 
             await connection.OpenAsync();

@@ -1,16 +1,16 @@
 ﻿@page
 @model App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
+@{
+    ViewData["Title"] = "Create";
+}
 
 <h1>Create ChartOfAccount</h1>
-    <hr />
-    <div class="row">
+<hr />
+<div class="row">
     <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ChartOfAccount.Name" class="control-label"></label>
                 <input asp-for="ChartOfAccount.Name" class="form-control" />
@@ -54,5 +54,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
