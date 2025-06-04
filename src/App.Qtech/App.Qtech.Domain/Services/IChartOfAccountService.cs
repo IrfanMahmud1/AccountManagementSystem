@@ -10,7 +10,7 @@ namespace App.Qtech.Domain.Services
     public interface IChartOfAccountService
     {
         Task<ChartOfAccount> GetAccountByIdAsync(Guid id);
-        Task<List<ChartOfAccount>> GetAllAccountsAsync();
+        Task<List<ChartOfAccount>> GetAllAccountsAsync(Guid? id = null);
         Task AddAccountAsync(ChartOfAccount account);
         Task UpdateAccountAsync(ChartOfAccount account);
         Task DeleteAccountAsync(Guid id);

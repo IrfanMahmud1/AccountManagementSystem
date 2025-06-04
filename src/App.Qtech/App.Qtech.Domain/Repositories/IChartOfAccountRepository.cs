@@ -10,7 +10,7 @@ namespace App.Qtech.Domain.Repositories
     public interface IChartOfAccountRepository
     {
         Task<ChartOfAccount> GetByIdAsync(Guid id);
-        Task<List<ChartOfAccount>> GetAllAsync();
+        Task<List<ChartOfAccount>> GetAllAsync(Guid? id = null);
         Task<bool> CreateAsync(ChartOfAccount account);
         Task<bool> UpdateAsync(ChartOfAccount account);
         Task<bool> DeleteAsync(Guid id);

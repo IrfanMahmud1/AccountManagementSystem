@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Repositories\IChartOfAccountRepository.cs~RF16394bf6.TMP" />
     <None Remove="Repositories\IChartOfAccountRepository.cs~RFaf79e2e.TMP" />
   </ItemGroup>
 

@@ -106,7 +106,7 @@ namespace App.Qtech.Infrastructure.Repositories
 
             return null;
         }
-        public async Task<List<ChartOfAccount>> GetAllAsync()
+        public async Task<List<ChartOfAccount>> GetAllAsync(Guid? id = null)
         {
             var accounts = new List<ChartOfAccount>();
 
@@ -116,8 +116,8 @@ namespace App.Qtech.Infrastructure.Repositories
                 CommandType = CommandType.StoredProcedure,
             };
 
-            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.Get.ToString());
-            command.Parameters.AddWithValue("@Id", DBNull.Value);
+            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.GetAll.ToString());
+            command.Parameters.AddWithValue("@Id", id == null ? DBNull.Value : id);
 
             await connection.OpenAsync();
             using var reader = await command.ExecuteReaderAsync();
@@ -200,6 +200,7 @@ namespace App.Qtech.Infrastructure.Repositories
     public enum ChartOfAccountAction
     {
         Get,
+        GetAll,
         Create,
         Update,
         Delete
