@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Domain.Services;
+using App.Qtech.Domain.Repositories;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
     public class DetailsModel : PageModel
     {
-        private readonly App.Qtech.Infrastructure.Data.ApplicationDbContext _context;
+        private readonly ILogger<DetailsModel> _logger;
+        private readonly IChartOfAccountService _chartOfAccountService;
 
-        public DetailsModel(App.Qtech.Infrastructure.Data.ApplicationDbContext context)
+        public DetailsModel(ILogger<DetailsModel> logger, IChartOfAccountService chartOfAccountService)
         {
-            _context = context;
+            _logger = logger;
+            _chartOfAccountService = chartOfAccountService;
         }
 
         [BindProperty]
@@ -30,9 +34,18 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                 return NotFound();
             }
 
+            try
+            {
+                ChartOfAccount = await _chartOfAccountService.GetAccountByIdAsync(id);
+                ChildAccounts = await _chartOfAccountService.GetAllChildAccountsAsync(id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve child account details");
+                return RedirectToPage("./Error");
+            }
 
-
-            return NotFound();
+            return Page();
         }
     }
 }

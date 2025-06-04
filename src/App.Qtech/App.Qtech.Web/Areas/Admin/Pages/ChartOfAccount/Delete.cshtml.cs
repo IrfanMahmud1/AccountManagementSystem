@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Domain.Services;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
     public class DeleteModel : PageModel
     {
         private readonly ILogger<EditModel> _logger;
-        private readonly App.Qtech.Domain.Services.IChartOfAccountService _chartOfAccountService;
+        private readonly IChartOfAccountService _chartOfAccountService;
 
-        public DeleteModel(ILogger<EditModel> logger, Domain.Services.IChartOfAccountService chartOfAccountService)
+        public DeleteModel(ILogger<EditModel> logger, IChartOfAccountService chartOfAccountService)
         {
             _logger = logger;
             _chartOfAccountService = chartOfAccountService;
