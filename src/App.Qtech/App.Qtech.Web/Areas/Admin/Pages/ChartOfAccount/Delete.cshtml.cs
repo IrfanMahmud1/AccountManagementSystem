@@ -64,7 +64,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
             try
             {
                 await _chartOfAccountService.DeleteAccountAsync(id);
-
+                TempData["SuccessMessage"] = "Account deleted successfully";
                 return RedirectToPage("./Index");
             }
             catch (Exception ex)
