@@ -11,6 +11,8 @@ namespace App.Qtech.Domain.Services
     {
         Task<ChartOfAccount> GetAccountByIdAsync(Guid id);
         Task<List<ChartOfAccount>> GetAllAccountsAsync(Guid? id = null);
+        Task<List<ChartOfAccount>> GetAllAccountsWithoutChildAsync(Guid id);
+        Task<List<ChartOfAccount>> GetAllChildAccountsAsync(Guid id);
         Task AddAccountAsync(ChartOfAccount account);
         Task UpdateAccountAsync(ChartOfAccount account);
         Task DeleteAccountAsync(Guid id);

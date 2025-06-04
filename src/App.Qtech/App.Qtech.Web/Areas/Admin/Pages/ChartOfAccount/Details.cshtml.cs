@@ -30,17 +30,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                 return NotFound();
             }
 
-            try
-            {
-                
-            }
 
-            if (chartofaccount is not null)
-            {
-                ChartOfAccount = chartofaccount;
-
-                return Page();
-            }
 
             return NotFound();
         }

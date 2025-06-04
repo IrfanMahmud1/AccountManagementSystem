@@ -137,6 +137,66 @@ namespace App.Qtech.Infrastructure.Repositories
             return accounts;
         }
 
+        public async Task<List<ChartOfAccount>> GetAllWithNoChildAsync(Guid id)
+        {
+            var accounts = new List<ChartOfAccount>();
+
+            using var connection = new SqlConnection(_connectionString);
+            using var command = new SqlCommand("sp_ManageChartOfAccounts", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.GetAllWithNoChild.ToString());
+            command.Parameters.AddWithValue("@Id", id);
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                accounts.Add(new ChartOfAccount
+                {
+                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    ParentId = reader.IsDBNull(reader.GetOrdinal("ParentId")) ? null : reader.GetGuid(reader.GetOrdinal("ParentId")),
+                    AccountType = reader.GetString(reader.GetOrdinal("AccountType")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
+                });
+            }
+
+            return accounts;
+        }
+        public async Task<List<ChartOfAccount>> GetAllChildsAsync(Guid id)
+        {
+            var accounts = new List<ChartOfAccount>();
+
+            using var connection = new SqlConnection(_connectionString);
+            using var command = new SqlCommand("sp_ManageChartOfAccounts", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.GetAllChilds.ToString());
+            command.Parameters.AddWithValue("@Id", id);
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                accounts.Add(new ChartOfAccount
+                {
+                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    ParentId = reader.IsDBNull(reader.GetOrdinal("ParentId")) ? null : reader.GetGuid(reader.GetOrdinal("ParentId")),
+                    AccountType = reader.GetString(reader.GetOrdinal("AccountType")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
+                });
+            }
+
+            return accounts;
+        }
         public async Task<bool> CreateAsync(ChartOfAccount account)
         {
             return await ExecuteNonQuery(account, ChartOfAccountAction.Create);
@@ -201,6 +261,8 @@ namespace App.Qtech.Infrastructure.Repositories
     {
         Get,
         GetAll,
+        GetAllWithNoChild,
+        GetAllChilds,
         Create,
         Update,
         Delete

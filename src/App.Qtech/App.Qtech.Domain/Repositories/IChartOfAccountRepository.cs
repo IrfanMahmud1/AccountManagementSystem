@@ -11,6 +11,8 @@ namespace App.Qtech.Domain.Repositories
     {
         Task<ChartOfAccount> GetByIdAsync(Guid id);
         Task<List<ChartOfAccount>> GetAllAsync(Guid? id = null);
+        Task<List<ChartOfAccount>> GetAllWithNoChildAsync(Guid id);
+        Task<List<ChartOfAccount>> GetAllChildsAsync(Guid id);
         Task<bool> CreateAsync(ChartOfAccount account);
         Task<bool> UpdateAsync(ChartOfAccount account);
         Task<bool> DeleteAsync(Guid id);

@@ -37,7 +37,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
             try
             {
                 var chartofaccount = await _chartOfAccountService.GetAccountByIdAsync(id);
-                var parentAccounts = await _chartOfAccountService.GetAllAccountsAsync(id);
+                var parentAccounts = await _chartOfAccountService.GetAllAccountsWithoutChildAsync(id);
                 if (chartofaccount == null)
                 {
                     return NotFound();
@@ -72,7 +72,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
             }
             try
             {
-                ParentAccounts = await _chartOfAccountService.GetAllAccountsAsync(ChartOfAccount.Id);
+                ParentAccounts = await _chartOfAccountService.GetAllAccountsWithoutChildAsync(ChartOfAccount.Id);
             }
             catch (Exception ex)
             {
