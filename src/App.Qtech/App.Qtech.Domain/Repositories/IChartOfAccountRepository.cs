@@ -11,7 +11,7 @@ namespace App.Qtech.Domain.Repositories
     {
         Task<List<ChartOfAccount>> GetAllAsync();
         Task<bool> CreateAsync(ChartOfAccount account);
-        //Task UpdateAsync(ChartOfAccount account);
-        //Task DeleteAsync(int id);
+        Task<bool> UpdateAsync(ChartOfAccount account);
+        Task<bool> DeleteAsync(Guid id);
     }
 }

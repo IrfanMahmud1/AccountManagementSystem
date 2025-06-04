@@ -20,6 +20,8 @@ namespace App.Qtech.Application.Services
 
         public async Task<List<ChartOfAccount>> GetAllAccountsAsync() => await _repository.GetAllAsync();
         public async Task AddAccountAsync(ChartOfAccount account) => await _repository.CreateAsync(account);
+        public async Task UpdateAccountAsync(ChartOfAccount account) => await _repository.CreateAsync(account);
+        public async Task DeleteAccountAsync(Guid id) => await _repository.CreateAsync(id);
 
     }
 
