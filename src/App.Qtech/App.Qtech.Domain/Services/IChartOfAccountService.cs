@@ -14,6 +14,7 @@ namespace App.Qtech.Domain.Services
         Task AddAccountAsync(ChartOfAccount account);
         Task UpdateAccountAsync(ChartOfAccount account);
         Task DeleteAccountAsync(Guid id);
+        Task<bool> IsParentAccount(Guid id);
     }
 
 }

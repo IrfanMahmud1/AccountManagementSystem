@@ -23,6 +23,8 @@ namespace App.Qtech.Application.Services
         public async Task AddAccountAsync(ChartOfAccount account) => await _repository.CreateAsync(account);
         public async Task UpdateAccountAsync(ChartOfAccount account) => await _repository.UpdateAsync(account);
         public async Task DeleteAccountAsync(Guid id) => await _repository.DeleteAsync(id);
+        public async Task<bool> IsParentAccount(Guid id) =>
+            await _repository.GetChildCountByParentIdAsync(id) > 0;
 
     }
 
