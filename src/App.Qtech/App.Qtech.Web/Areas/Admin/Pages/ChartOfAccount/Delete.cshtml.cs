@@ -23,7 +23,6 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
         [BindProperty]
         public App.Qtech.Domain.Entities.ChartOfAccount ChartOfAccount { get; set; } = default!;
-
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (Guid.Empty == id)
@@ -38,7 +37,14 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                 {
                     return NotFound();
                 }
-                ChartOfAccount = chartofaccount;
+                if(await _chartOfAccountService.IsParentAccount(id))
+                {
+                    _logger.LogWarning("Cannot delete account with child accounts.");
+                    TempData["ErrorMessage"] = "Cannot delete account with child accounts. Please delete child accounts first.";
+                    return RedirectToPage("./Index");
+                }
+                else
+                    ChartOfAccount = chartofaccount;
             }
             catch (Exception ex)
             {
