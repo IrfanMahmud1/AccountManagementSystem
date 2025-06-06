@@ -16,6 +16,7 @@ namespace App.Qtech.Domain.Entities
         public string AccountType { get; set; } // Asset, Liability, Income, etc.
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
+        public List<ChartOfAccount> Children { get; set; } = new();
     }
 
 }

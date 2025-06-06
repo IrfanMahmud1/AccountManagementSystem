@@ -15,60 +15,6 @@ using System.Threading.Tasks;
 
 namespace App.Qtech.Infrastructure.Repositories
 {
-    //public class ChartOfAccountRepository(IConfiguration configration) : IChartOfAccountRepository
-    //{
-    //    private readonly string _connection = configration.GetConnectionString("DefaultConnection");
-
-    //    public async Task<List<ChartOfAccount>> GetAllAsync()
-    //    {
-    //        var parameters = new Dictionary<string, object>
-    //        {
-    //            { "Action","SELECT" }
-    //        };
-    //        var command = CreateCommand("sp_ManageChartOfAccounts", parameters);
-    //        var reader = await command.ExecuteReaderAsync();
-    //        var result = new List<ChartOfAccount>();
-    //        while(await reader.ReadAsync())
-    //        {
-    //            for (int i = 0; i < reader.FieldCount; i++)
-    //            {
-    //                var account = new ChartOfAccount
-    //                {
-    //                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
-    //                    Name = reader.GetString(reader.GetOrdinal("Name")),
-    //                    ParentId = reader.GetGuid(reader.GetOrdinal("ParentId")),
-    //                    AccountType = reader.GetString(reader.GetOrdinal("AccountType")),
-    //                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
-    //                    CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
-    //                };
-    //                result.Add(account);
-    //            }
-    //        }
-    //        return result;
-    //    }
-    //    public async Task AddAsync(ChartOfAccount account)
-    //    {
-
-    //    }
-    //    private DbCommand CreateCommand(string storedProcedureName,
-    //        IDictionary<string, object> parameters = null)
-    //    {
-    //        var command = new SqlCommand(_connection);
-    //        command.CommandText = storedProcedureName;
-    //        command.CommandType = CommandType.StoredProcedure;
-
-    //        if (parameters != null)
-    //        {
-    //            foreach (var item in parameters)
-    //            {
-    //                command.Parameters.Add(new SqlParameter(item.Key, item.Value));
-    //            }
-    //        }
-
-    //        return command;
-    //    }
-
-    //}
     public class ChartOfAccountRepository : IChartOfAccountRepository
     {
         private readonly string _connectionString;
@@ -178,7 +124,7 @@ namespace App.Qtech.Infrastructure.Repositories
             };
 
             command.Parameters.AddWithValue("@Action", ChartOfAccountAction.GetAllChilds.ToString());
-            command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@ParentId", id);
 
             await connection.OpenAsync();
             using var reader = await command.ExecuteReaderAsync();

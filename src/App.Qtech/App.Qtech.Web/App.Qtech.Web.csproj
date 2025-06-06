@@ -11,6 +11,8 @@
     <None Remove="appsettings.json~RF17b25a15.TMP" />
     <None Remove="Areas\Admin\Pages\ChartOfAccount\Create.cshtml~RF10506b25.TMP" />
     <None Remove="Areas\Admin\Pages\ChartOfAccount\Details.cshtml~RF17c95543.TMP" />
+    <None Remove="Areas\Admin\Pages\ChartOfAccount\Details.cshtml~RF18a5f8e7.TMP" />
+    <None Remove="Areas\Admin\Pages\ChartOfAccount\Details.cshtml~RF18ab7f94.TMP" />
     <None Remove="Areas\Admin\Pages\Dashboard\Index.cshtml.cs~RFb782c18.TMP" />
     <None Remove="Areas\Admin\Pages\Dashboard\Index.cshtml.cs~RFb879aa8.TMP" />
     <None Remove="Areas\Admin\Pages\_ViewImports.cshtml~RFb53b2ff.TMP" />
