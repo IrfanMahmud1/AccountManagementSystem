@@ -1,0 +1,16 @@
+﻿@model App.Qtech.Domain.Entities.ChartOfAccount
+
+<ul>
+    <li>
+        <strong>@Model.Name</strong> (@Model.AccountType) - @(Model.IsActive ? "Active" : "Inactive")
+        @if (Model.Children.Any())
+        {
+            <ul>
+                @foreach (var child in Model.Children)
+                {
+                    <partial name="_AccountTreePartial" model="child" />
+                }
+            </ul>
+        }
+    </li>
+</ul>

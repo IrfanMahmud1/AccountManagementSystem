@@ -25,7 +25,6 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
         [BindProperty]
         public App.Qtech.Domain.Entities.ChartOfAccount ChartOfAccount { get; set; } = default!;
-        public List<App.Qtech.Domain.Entities.ChartOfAccount> ChildAccounts { get; set; } = new List<App.Qtech.Domain.Entities.ChartOfAccount>();
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
@@ -36,8 +35,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 
             try
             {
-                ChartOfAccount = await _chartOfAccountService.GetAccountByIdAsync(id);
-                ChildAccounts = await _chartOfAccountService.GetAllChildAccountsAsync(id);
+                ChartOfAccount = await _chartOfAccountService.GetHierarchyAsync(id);
             }
             catch(Exception ex)
             {
