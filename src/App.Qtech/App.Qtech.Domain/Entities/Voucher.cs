@@ -12,8 +12,8 @@ namespace App.Qtech.Domain.Entities
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public string ReferenceNo { get; set; }
-        public VoucherType Type { get; set; }
-        public List<VoucherEntry> Entries { get; set; } = new();
+        public string Type { get; set; }
+        public List<VoucherEntry>? Entries { get; set; }
     }
 
 }
