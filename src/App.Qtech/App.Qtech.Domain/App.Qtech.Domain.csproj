@@ -11,6 +11,7 @@
     <None Remove="Repositories\IChartOfAccountRepository.cs~RF16394bf6.TMP" />
     <None Remove="Repositories\IChartOfAccountRepository.cs~RFaf79e2e.TMP" />
     <None Remove="Repositories\IVoucherRepository.cs~RF2c39896a.TMP" />
+    <None Remove="Services\IVoucherService.cs~RF2c5af5ef.TMP" />
   </ItemGroup>
 
 </Project>
