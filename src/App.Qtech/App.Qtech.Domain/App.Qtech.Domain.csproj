@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Entities\Voucher.cs~RF2c33c845.TMP" />
     <None Remove="Repositories\IChartOfAccountRepository.cs~RF16394bf6.TMP" />
     <None Remove="Repositories\IChartOfAccountRepository.cs~RFaf79e2e.TMP" />
+    <None Remove="Repositories\IVoucherRepository.cs~RF2c39896a.TMP" />
   </ItemGroup>
 
 </Project>

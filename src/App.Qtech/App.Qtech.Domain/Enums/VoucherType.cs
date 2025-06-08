@@ -8,8 +8,8 @@ namespace App.Qtech.Domain.Enums
 {
     public enum VoucherType
     {
-        Journal = 1,
-        Payment = 2,
-        Receipt = 3
+        Journal,
+        Payment,
+        Receipt
     }
 }
