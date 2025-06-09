@@ -1,4 +1,5 @@
-﻿using App.Qtech.Domain.Entities;
+﻿using App.Qtech.Domain.Dtos;
+using App.Qtech.Domain.Entities;
 using App.Qtech.Domain.Repositories;
 using App.Qtech.Domain.Services;
 using System;
@@ -16,6 +17,12 @@ namespace App.Qtech.Application.Services
         {
             _voucherRepository = voucherRepository;
         }
+
+        public Task<List<VoucherDisplayDto>> GetAllVouchersAsync()
+        {
+            return _voucherRepository.GetAllDisplaysAsync();
+        }
+
         public Task SaveVoucherAsync(Voucher voucher)
         {
             return _voucherRepository.SaveAsync(voucher);

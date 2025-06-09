@@ -1,4 +1,5 @@
-﻿using App.Qtech.Domain.Entities;
+﻿using App.Qtech.Domain.Dtos;
+using App.Qtech.Domain.Entities;
 using App.Qtech.Domain.Repositories;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,30 @@ namespace App.Qtech.Infrastructure.Repositories
         public VoucherRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        public async Task<List<VoucherDisplayDto>> GetAllDisplaysAsync()
+        {
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("SELECT * FROM vw_VoucherDetails", conn);
+
+            await conn.OpenAsync();
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            var VoucherRows = new List<VoucherDisplayDto>();
+            while (await reader.ReadAsync())
+            {
+                VoucherRows.Add(new VoucherDisplayDto
+                {
+                    Date = reader.GetDateTime(0),
+                    ReferenceNo = reader.GetString(1),
+                    Type = reader.GetString(2).ToString(), // Enum to string
+                    AccountName = reader.GetString(3),
+                    Debit = reader.GetDecimal(4),
+                    Credit = reader.GetDecimal(5)
+                });
+            }
+            return VoucherRows;
         }
 
         public async Task SaveAsync(Voucher voucher)

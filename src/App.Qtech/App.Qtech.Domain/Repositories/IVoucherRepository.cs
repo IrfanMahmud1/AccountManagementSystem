@@ -1,4 +1,5 @@
-﻿using App.Qtech.Domain.Entities;
+﻿using App.Qtech.Domain.Dtos;
+using App.Qtech.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace App.Qtech.Domain.Repositories
     public interface IVoucherRepository
     {
         Task SaveAsync(Voucher voucher);
+        Task<List<VoucherDisplayDto>> GetAllDisplaysAsync();
     }
 }
