@@ -12,7 +12,10 @@ namespace App.Qtech.Infrastructure.Data
 
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
+        private const string SqlConlumnType = "decimal(18,2)";
         public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<VoucherEntry> VoucherEntries { get; set; }
         public ApplicationDbContext(string connectionString, string migrationAssembly)
         {
             _connectionString = connectionString;
@@ -29,6 +32,14 @@ namespace App.Qtech.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationRole>().HasData(RoleSeed.GetRoles());
+            builder.Entity<VoucherEntry>(entity =>
+            {
+                entity.Property(e => e.Debit).
+                    HasColumnType(SqlConlumnType);
+                entity.Property(e => e.Debit).
+                    HasColumnType(SqlConlumnType);
+            });
+
             base.OnModelCreating(builder);
         }
     }

@@ -26,7 +26,7 @@ namespace App.Qtech.Infrastructure.Repositories
             using var cmd = new SqlCommand("sp_SaveVoucher", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Id", voucher.Id);
+            cmd.Parameters.AddWithValue("@VoucherId", voucher.Id);
             cmd.Parameters.AddWithValue("@Date", voucher.Date);
             cmd.Parameters.AddWithValue("@ReferenceNo", voucher.ReferenceNo);
             cmd.Parameters.AddWithValue("@Type", voucher.Type);
