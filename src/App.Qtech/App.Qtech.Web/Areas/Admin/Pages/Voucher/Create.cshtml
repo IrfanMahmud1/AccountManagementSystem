@@ -1,0 +1,77 @@
+﻿@page
+@using App.Qtech.Domain.Enums
+@model CreateModel
+@{
+    ViewData["Title"] = "Create Voucher";
+}
+
+<h2>Create Voucher</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="VoucherVM.Date"></label>
+        <input asp-for="VoucherVM.Date" class="form-control" />
+        <span asp-validation-for="VoucherVM.Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VoucherVM.ReferenceNo"></label>
+        <input asp-for="VoucherVM.ReferenceNo" class="form-control" />
+        <span asp-validation-for="VoucherVM.ReferenceNo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VoucherVM.Type"></label>
+        <select asp-for="VoucherVM.Type" asp-items="Html.GetEnumSelectList<VoucherType>()" class="form-control"></select>
+        <span asp-validation-for="VoucherVM.Type" class="text-danger"></span>
+    </div>
+
+    <h4>Entries</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Account Name</th>
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="entry-rows">
+            @for (int i = 0; i < Model.VoucherVM.Entries.Count; i++)
+            {
+                <tr>
+                    <td><input name="VoucherVM.Entries[@i].AccountName" class="form-control" /></td>
+                    <td><input name="VoucherVM.Entries[@i].Debit" class="form-control" type="number" step="0.01" /></td>
+                    <td><input name="VoucherVM.Entries[@i].Credit" class="form-control" type="number" step="0.01" /></td>
+                    <td><button type="button" class="btn btn-danger btn-sm remove-row">X</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary" id="add-row">Add Entry</button>
+    <br /><br />
+    <button type="submit" class="btn btn-primary">Save Voucher</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("add-row").addEventListener("click", function () {
+            let index = document.querySelectorAll("#entry-rows tr").length;
+            let row = `
+                <tr>
+                    <td><input name="VoucherVM.Entries[${index}].AccountName" class="form-control" /></td>
+                    <td><input name="VoucherVM.Entries[${index}].Debit" class="form-control" type="number" step="0.01" /></td>
+                    <td><input name="VoucherVM.Entries[${index}].Credit" class="form-control" type="number" step="0.01" /></td>
+                    <td><button type="button" class="btn btn-danger btn-sm remove-row">X</button></td>
+                </tr>`;
+            document.getElementById("entry-rows").insertAdjacentHTML("beforeend", row);
+        });
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-row")) {
+                e.target.closest("tr").remove();
+            }
+        });
+    </script>
+}

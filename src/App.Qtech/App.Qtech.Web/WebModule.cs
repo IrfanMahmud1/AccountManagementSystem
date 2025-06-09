@@ -26,8 +26,13 @@ namespace App.Qtech.Web
              .InstancePerLifetimeScope();
             builder.RegisterType<ChartOfAccountRepository>().As<IChartOfAccountRepository>()
                 .InstancePerLifetimeScope();
-             builder.RegisterType<ChartOfAccountService>().As<IChartOfAccountService>()
+
+            builder.RegisterType<ChartOfAccountService>().As<IChartOfAccountService>()
+               .InstancePerLifetimeScope(); 
+            builder.RegisterType<VoucherRepository>().As<IVoucherRepository>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<VoucherService>().As<IVoucherService>()
+               .InstancePerLifetimeScope();
             base.Load(builder);
         }
     }
