@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Domain.Services;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
     public class EditModel : PageModel
     {
-        private readonly App.Qtech.Infrastructure.Data.ApplicationDbContext _context;
+        private readonly IRoleModuleAccessService _roleModuleAccessService;
+        private readonly ILogger<IndexModel> _logger;
 
-        public EditModel(App.Qtech.Infrastructure.Data.ApplicationDbContext context)
+        public EditModel(IRoleModuleAccessService roleModuleAccessService, ILogger<IndexModel> logger)
         {
-            _context = context;
+            _roleModuleAccessService = roleModuleAccessService;
+            _logger = logger;
         }
 
         [BindProperty]

@@ -15,6 +15,7 @@
     <None Remove="Areas\Admin\Pages\ChartOfAccount\Details.cshtml~RF18ab7f94.TMP" />
     <None Remove="Areas\Admin\Pages\Dashboard\Index.cshtml.cs~RFb782c18.TMP" />
     <None Remove="Areas\Admin\Pages\Dashboard\Index.cshtml.cs~RFb879aa8.TMP" />
+    <None Remove="Areas\Admin\Pages\RoleModuleAccess\Index.cshtml.cs~RF35100ead.TMP" />
     <None Remove="Areas\Admin\Pages\_ViewImports.cshtml~RFb53b2ff.TMP" />
     <None Remove="Pages\Account\Logout.cshtml~RF13b56be.TMP" />
     <None Remove="Pages\Account\Logout.cshtml~RF1433044.TMP" />

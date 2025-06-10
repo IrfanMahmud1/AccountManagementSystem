@@ -7,25 +7,28 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Domain.Services;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
     public class CreateModel : PageModel
     {
-        private readonly App.Qtech.Infrastructure.Data.ApplicationDbContext _context;
+        private readonly IRoleModuleAccessService _roleModuleAccessService;
+        private readonly ILogger<IndexModel> _logger;
 
-        public CreateModel(App.Qtech.Infrastructure.Data.ApplicationDbContext context)
+        [BindProperty]
+        public App.Qtech.Domain.Entities.RoleModuleAccess RoleModuleAccess { get; set; } = default!;
+
+        public CreateModel(IRoleModuleAccessService roleModuleAccessService, ILogger<IndexModel> logger)
         {
-            _context = context;
+            _roleModuleAccessService = roleModuleAccessService;
+            _logger = logger;
         }
 
         public IActionResult OnGet()
         {
             return Page();
         }
-
-        [BindProperty]
-        public App.Qtech.Domain.Entities.RoleModuleAccess RoleModuleAccess { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()

@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Domain.Services;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
     public class DeleteModel : PageModel
     {
-        private readonly App.Qtech.Infrastructure.Data.ApplicationDbContext _context;
+        private readonly IRoleModuleAccessService _roleModuleAccessService;
+        private readonly ILogger<IndexModel> _logger;
 
-        public DeleteModel(App.Qtech.Infrastructure.Data.ApplicationDbContext context)
+        public DeleteModel(IRoleModuleAccessService roleModuleAccessService, ILogger<IndexModel> logger)
         {
-            _context = context;
+            _roleModuleAccessService = roleModuleAccessService;
+            _logger = logger;
         }
 
         [BindProperty]
