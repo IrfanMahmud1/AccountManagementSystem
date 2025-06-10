@@ -11,9 +11,11 @@ using App.Qtech.Domain.Services;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using App.Qtech.Infrastructure.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IRoleModuleAccessService _roleModuleAccessService;

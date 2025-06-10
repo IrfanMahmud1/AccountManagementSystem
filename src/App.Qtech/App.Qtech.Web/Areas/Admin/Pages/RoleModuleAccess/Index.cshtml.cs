@@ -11,9 +11,11 @@ using App.Qtech.Domain.Repositories;
 using App.Qtech.Domain.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IRoleModuleAccessService _roleModuleAccessService;

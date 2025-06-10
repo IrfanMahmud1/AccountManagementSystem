@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
 using App.Qtech.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IChartOfAccountService _chartOfAccountService;

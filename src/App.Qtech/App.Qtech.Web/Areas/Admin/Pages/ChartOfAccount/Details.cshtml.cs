@@ -9,9 +9,11 @@ using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
 using App.Qtech.Domain.Services;
 using App.Qtech.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly ILogger<DetailsModel> _logger;

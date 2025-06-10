@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
 using App.Qtech.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ILogger<EditModel> _logger;

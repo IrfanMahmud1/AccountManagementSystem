@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.Dashboard
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
