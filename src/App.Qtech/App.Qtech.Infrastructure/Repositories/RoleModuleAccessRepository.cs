@@ -39,7 +39,7 @@ namespace App.Qtech.Infrastructure.Repositories
             return await ExecuteNonQueryAsync(roleModuleAccess, RoleModuleAccessAction.Delete);
         }
 
-        public async Task<IEnumerable<RoleModuleAccess>> GetAllAsync()
+        public async Task<IList<RoleModuleAccess>> GetAllAsync()
         {
             var roleModuleAccesses = new List<RoleModuleAccess>();
 
