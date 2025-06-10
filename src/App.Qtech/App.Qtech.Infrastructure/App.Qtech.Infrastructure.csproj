@@ -30,8 +30,4 @@
     <ProjectReference Include="..\App.Qtech.Domain\App.Qtech.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
 </Project>

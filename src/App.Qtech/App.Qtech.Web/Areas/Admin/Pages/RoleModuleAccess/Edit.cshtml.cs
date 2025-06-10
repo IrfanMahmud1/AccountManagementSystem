@@ -5,76 +5,95 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
 using App.Qtech.Domain.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using App.Qtech.Infrastructure.Identity;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
     public class EditModel : PageModel
     {
         private readonly IRoleModuleAccessService _roleModuleAccessService;
-        private readonly ILogger<IndexModel> _logger;
-
-        public EditModel(IRoleModuleAccessService roleModuleAccessService, ILogger<IndexModel> logger)
-        {
-            _roleModuleAccessService = roleModuleAccessService;
-            _logger = logger;
-        }
+        private readonly ILogger<EditModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         [BindProperty]
         public App.Qtech.Domain.Entities.RoleModuleAccess RoleModuleAccess { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public List<string> Roles { get; set; } = new List<string>();
+        public List<string> Modules { get; set; } = new List<string>();
+        public List<string> Operations { get; set; } = new List<string>();
+        public EditModel(IRoleModuleAccessService roleModuleAccessService,
+            ILogger<EditModel> logger, UserManager<ApplicationUser> userManager)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            _roleModuleAccessService = roleModuleAccessService;
+            _logger = logger;
+            _userManager = userManager;
+        }
 
-            var rolemoduleaccess =  await _context.RoleModuleAccesses.FirstOrDefaultAsync(m => m.Id == id);
-            if (rolemoduleaccess == null)
+        public async Task<IActionResult> OnGet(Guid id)
+        {
+            try
             {
-                return NotFound();
+                var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                if (role == null)
+                {
+                    _logger.LogWarning("User role not found in claims.");
+                    return RedirectToPage("./Index");
+                }
+                if (!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess", "Update"))
+                {
+                    _logger.LogWarning("User does not have access to update RoleModuleAccess.");
+                    RedirectToPage("/AccessDenied");
+                }
             }
-            RoleModuleAccess = rolemoduleaccess;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to check user access for RoleModuleAccess updation.");
+            }
+            try 
+            {
+                RoleModuleAccess = await _roleModuleAccessService.GetRoleModuleAccessByIdAsync(id);
+                var user = await _userManager.GetUserAsync(User);
+                var roles = await _userManager.GetRolesAsync(user);
+                if (roles.Count == 0)
+                {
+                    _logger.LogWarning("User does not have any roles assigned.");
+                    return RedirectToPage("/AccessDenied");
+                }
+                Roles = roles.ToList();
+                Modules = new List<string> { "ChartOfAccount", "Voucher", "RoleModuleAccess" }; // Replace with actual module retrieval logic
+                Operations = new List<string> { "View", "Create", "Update", "Delete" }; // Replace with actual module retrieval logic
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve roles for RoleModuleAccess updation.");
+            }
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
-            }
-
-            _context.Attach(RoleModuleAccess).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoleModuleAccessExists(RoleModuleAccess.Id))
+                try
                 {
-                    return NotFound();
+                    await _roleModuleAccessService.EditRoleModuleAccessAsync(RoleModuleAccess);
+                    TempData["SuccessMessage"] = "Role Module Access updated successfully.";
+                    return RedirectToPage("./Index");
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw;
+                    _logger.LogError(ex, "Failed to update RoleModuleAccess");
+                    ModelState.AddModelError(string.Empty, "An error occurred while updating the Role Module Access. Please try again.");
                 }
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool RoleModuleAccessExists(Guid id)
-        {
-            return _context.RoleModuleAccesses.Any(e => e.Id == id);
+            return Page();
         }
     }
 }
