@@ -62,7 +62,8 @@ namespace App.Qtech.Infrastructure.Repositories
                     Id = reader.GetGuid(reader.GetOrdinal("Id")),
                     RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
                     ModuleName = reader.GetString(reader.GetOrdinal("ModuleName")),
-                    HasAccess = reader.GetBoolean(reader.GetOrdinal("HasAccess"))
+                    HasAccess = reader.GetBoolean(reader.GetOrdinal("HasAccess")),
+                    Operation = reader.GetString(reader.GetOrdinal("Operation"))
                 });
             }
 
@@ -110,9 +111,15 @@ namespace App.Qtech.Infrastructure.Repositories
 
             if (operation is RoleModuleAccessAction.Create or RoleModuleAccessAction.Update)
             {
-                command.Parameters.AddWithValue("@RoleName", roleModuleAccess.RoleName ?? (object)DBNull.Value);
-                command.Parameters.AddWithValue("@ModuleName", roleModuleAccess.ModuleName ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@RoleName", 
+                    roleModuleAccess.RoleName ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@ModuleName", 
+                    roleModuleAccess.ModuleName ?? (object)DBNull.Value);
+
                 command.Parameters.AddWithValue("@HasAccess", roleModuleAccess.HasAccess);
+
+                command.Parameters.AddWithValue("@Operation", 
+                    roleModuleAccess.Operation ?? (object)DBNull.Value);
             }
 
             await connection.OpenAsync();

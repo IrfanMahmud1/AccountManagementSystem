@@ -30,6 +30,7 @@ namespace App.Qtech.Infrastructure.Seeds
                             {
                                 RoleName = adminRoleName,
                                 ModuleName = module,
+                                HasAccess = true,
                                 Operation = operation
                             });
                         }

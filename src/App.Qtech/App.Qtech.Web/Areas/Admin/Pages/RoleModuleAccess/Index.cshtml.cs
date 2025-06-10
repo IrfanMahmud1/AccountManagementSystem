@@ -29,7 +29,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 
         public IList<App.Qtech.Domain.Entities.RoleModuleAccess> RoleModuleAccess { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                 else if(!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess","View"))
                 {
                     _logger.LogWarning("User does not have access to view RoleModuleAccess.");
-                    RedirectToPage("/AccessDenied");
+                    return RedirectToPage("./AccessDenied");
                 }
                 RoleModuleAccess = await _roleModuleAccessService.GetAllRoleModuleAccessesAsync();
             }
@@ -49,7 +49,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
             {
                 _logger.LogError(ex, "Failed to retrieve RoleModuleAccesses");
             }
-
+            return Page();
         }
     }
 }
