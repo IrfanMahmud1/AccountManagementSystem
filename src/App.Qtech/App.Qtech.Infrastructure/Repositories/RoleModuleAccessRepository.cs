@@ -119,8 +119,9 @@ namespace App.Qtech.Infrastructure.Repositories
             return await command.ExecuteNonQueryAsync() > 0;
         }
 
-        public async Task<bool> HasAcess(string role, string module)
+        public async Task<bool> HasAcess(string role, string module,string operation)
         {
+            int count = 0;
             using var connection = new SqlConnection(_connectionString);
             using var command = new SqlCommand("", connection)
             {
@@ -129,14 +130,20 @@ namespace App.Qtech.Infrastructure.Repositories
 
             command.Parameters.AddWithValue("@Action", RoleModuleAccessAction.CheckAccess.ToString());
             command.Parameters.AddWithValue("@Id", DBNull.Value);
-
             command.Parameters.AddWithValue("@RoleName", string.IsNullOrEmpty(role) 
                 ? (object)DBNull.Value : role);
             command.Parameters.AddWithValue("@ModuleName", string.IsNullOrEmpty(module) 
                 ? (object)DBNull.Value : module);
+            command.Parameters.AddWithValue("@Operation", string.IsNullOrEmpty(operation)
+                ? (object)DBNull.Value : operation);
 
             await connection.OpenAsync();
-            return await command.ExecuteNonQueryAsync() > 0;
+            var result = await command.ExecuteScalarAsync();
+            if (result != null && result != DBNull.Value)
+            {
+                count = Convert.ToInt32(result);
+            }
+            return count > 0;
         }
     }
     public enum RoleModuleAccessAction

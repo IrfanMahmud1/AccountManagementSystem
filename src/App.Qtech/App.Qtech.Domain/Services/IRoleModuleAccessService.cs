@@ -9,7 +9,7 @@ namespace App.Qtech.Domain.Services
 {
     public interface IRoleModuleAccessService
     {
-        Task<bool> CanAcessAsync(string roleName, string moduleName);
+        Task<bool> CanAcessAsync(string roleName, string moduleName, string operation);
         Task<List<string>> GetAllModuleNamesByRoleNameAsync(string role);
         Task<IList<RoleModuleAccess>> GetAllRoleModuleAccessesAsync();
 

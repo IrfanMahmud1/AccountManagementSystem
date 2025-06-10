@@ -10,7 +10,7 @@ namespace App.Qtech.Domain.Repositories
     public interface IRoleModuleAccessRepository
     {
         Task<IList<RoleModuleAccess>> GetAllAsync();
-        Task<bool> HasAcess(string role, string module);
+        Task<bool> HasAcess(string role, string module, string operation);
         Task<List<string>> GetAsync(string role);
 
         Task<bool> AddAsync(RoleModuleAccess moduleAccess);
