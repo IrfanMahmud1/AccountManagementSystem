@@ -208,11 +208,12 @@ namespace App.Qtech.Infrastructure.Repositories
             int count = 0;
 
             using (var connection = new SqlConnection(_connectionString))
-            using (var command = new SqlCommand("sp_countChildAccountsByParentId", connection))
+            using (var command = new SqlCommand("sp_ManageChartOfAccounts", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Id", DBNull.Value);
                 command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Action", ChartOfAccountAction.IsExist.ToString());
 
                 await connection.OpenAsync();
 

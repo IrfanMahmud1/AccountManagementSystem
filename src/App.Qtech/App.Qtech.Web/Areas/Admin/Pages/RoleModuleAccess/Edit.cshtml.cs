@@ -92,7 +92,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                     {
                         _logger.LogWarning("User already have access to edit RoleModuleAccess.");
                         TempData["ErrorMessage"] = "User already have access to edit Role Module Access.";
-                        return RedirectToPage("./Index");
+                        return Page();
                     }
                     await _roleModuleAccessService.EditRoleModuleAccessAsync(RoleModuleAccess);
                     TempData["SuccessMessage"] = "Role Module Access updated successfully.";

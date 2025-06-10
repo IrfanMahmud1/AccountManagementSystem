@@ -72,7 +72,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                     }
                     await _chartOfAccountService.UpdateAccountAsync(ChartOfAccount);
                     TempData["SuccessMessage"] = "Account updated successfully";
-                    return RedirectToPage("./Index");
+                    return Page();
                 }
                 catch (Exception ex)
                 {
