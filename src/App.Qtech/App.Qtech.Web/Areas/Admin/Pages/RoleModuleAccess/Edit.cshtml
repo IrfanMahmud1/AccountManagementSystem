@@ -1,0 +1,48 @@
+﻿@page
+@model App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RoleModuleAccess</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RoleModuleAccess.Id" />
+            <div class="form-group">
+                
+                <label asp-for="RoleModuleAccess.RoleName" class="control-label"></label>
+                <input asp-for="RoleModuleAccess.RoleName" class="form-control" />
+                <span asp-validation-for="RoleModuleAccess.RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="RoleModuleAccess.ModuleName" class="control-label"></label>
+                <input asp-for="RoleModuleAccess.ModuleName" class="form-control" />
+                <span asp-validation-for="RoleModuleAccess.ModuleName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="RoleModuleAccess.HasAccess" /> @Html.DisplayNameFor(model => model.RoleModuleAccess.HasAccess)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
