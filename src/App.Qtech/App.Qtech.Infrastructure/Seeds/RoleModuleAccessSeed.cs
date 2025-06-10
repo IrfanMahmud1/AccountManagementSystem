@@ -20,10 +20,18 @@ namespace App.Qtech.Infrastructure.Seeds
             var adminRoleName = "Admin";
             try
             {
-                foreach (var module in new[] { "ChartOfAccount", "Voucher", "RoleModuleAccess" })
+                foreach (var module in new[] { "ChartOfAccount", "Voucher", "RoleModuleAccess","Dashboard" })
                 {
-                    foreach (var operation in new[] { "Create", "Edit", "Delete", "View" })
+                    foreach (var operation in new[] { "Create", "Update", "Delete", "View" })
                     {
+                        if (module == "Voucher" && operation == "Update" || operation == "Delete")
+                        {
+                            continue;
+                        }
+                        if (module == "Dashboard" && operation == "Update" || operation == "Delete" || operation == "Create")
+                        {
+                            continue;
+                        }
                         if (!await roleModuleAccessService.CanAcessAsync(adminRoleName, module, operation))
                         {
                             await roleModuleAccessService.CreateRoleModuleAccessAsync(new RoleModuleAccess

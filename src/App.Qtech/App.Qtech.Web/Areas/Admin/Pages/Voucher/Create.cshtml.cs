@@ -1,25 +1,49 @@
+using App.Qtech.Application.Services;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Domain.Services;
 using App.Qtech.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
 {
     public class CreateModel : PageModel
     {
         private readonly IVoucherService _voucherService;
+        private readonly IRoleModuleAccessService _roleModuleAccessService;
+        private readonly ILogger<CreateModel> _logger;
 
         [BindProperty]
         public CreateVoucherModel VoucherVM { get; set; }
 
-        public CreateModel(IVoucherService voucherService)
+        public CreateModel(IVoucherService voucherService, IRoleModuleAccessService roleModuleAccessService, ILogger<CreateModel> logger)
         {
             _voucherService = voucherService;
+            _roleModuleAccessService = roleModuleAccessService;
+            _logger = logger;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            try
+            {
+                var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                if (role == null)
+                {
+                    _logger.LogWarning("User role not found in claims.");
+                    return RedirectToPage("./Index");
+                }
+                if (!await _roleModuleAccessService.CanAcessAsync(role, "Voucher", "Create"))
+                {
+                    _logger.LogWarning("User does not have access to Create Voucher.");
+                    RedirectToPage("./AccessDenied");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to check user access for RoleModuleAccess creation.");
+            }
             VoucherVM = new CreateVoucherModel
             {
                 Date = DateTime.Today,
@@ -28,6 +52,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
                 new VoucherEntry() // one row by default
             }
             };
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
