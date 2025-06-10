@@ -154,7 +154,7 @@ namespace App.Qtech.Infrastructure.Repositories
                 CommandType = CommandType.StoredProcedure
             };
 
-            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.Get.ToString());
+            command.Parameters.AddWithValue("@Action", RoleModuleAccessAction.GetById.ToString());
             command.Parameters.AddWithValue("@Id", id);
 
             await connection.OpenAsync();
@@ -178,6 +178,7 @@ namespace App.Qtech.Infrastructure.Repositories
     public enum RoleModuleAccessAction
     {
         Get,
+        GetById,
         GetAll,
         Create,
         Update,

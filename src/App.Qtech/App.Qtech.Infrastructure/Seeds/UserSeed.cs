@@ -1,4 +1,7 @@
-﻿using App.Qtech.Infrastructure.Identity;
+﻿using App.Qtech.Domain.Entities;
+using App.Qtech.Domain.Repositories;
+using App.Qtech.Domain.Services;
+using App.Qtech.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,7 +16,7 @@ namespace App.Qtech.Infrastructure.Seeds
         {
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>()
                                         .CreateLogger("UserSeed");
-
+            var roleModuleAccessService = serviceProvider.GetRequiredService<IRoleModuleAccessService>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
@@ -75,6 +78,21 @@ namespace App.Qtech.Infrastructure.Seeds
                         }
                         else
                         {
+                            foreach(var module in new[] { "ChartOfAccount", "Voucher", "RoleModuleAccess" })
+                            {
+                                foreach(var operation in new[] { "Create", "Edit", "Delete", "View" })
+                                {
+                                    if (!await roleModuleAccessService.CanAcessAsync(adminRoleName, module,operation))
+                                    {
+                                        await roleModuleAccessService.CreateRoleModuleAccessAsync(new RoleModuleAccess
+                                        {
+                                            RoleName = adminRoleName,
+                                            ModuleName = module,
+                                            Operation = operation
+                                        });
+                                    }
+                                }
+                            }
                             logger.LogInformation("Admin user created and assigned role.");
                         }
                     }
