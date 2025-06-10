@@ -16,6 +16,12 @@ namespace App.Qtech.Application.Services
         {
             _roleModuleAccessRepository = roleModuleAccessRepository;
         }
+
+        public async Task<bool> CanAcessAsync(string roleName, string moduleName)
+        {
+            return await _roleModuleAccessRepository.HasAcess(roleName, moduleName);
+        }
+
         public async Task<bool> CreateRoleModuleAccessAsync(RoleModuleAccess roleModuleAccess)
         {
             return await _roleModuleAccessRepository.AddAsync(roleModuleAccess);

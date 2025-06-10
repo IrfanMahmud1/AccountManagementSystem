@@ -37,7 +37,12 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                     _logger.LogWarning("User role not found in claims.");
                     return;
                 }
-                
+                if(!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess"))
+                {
+                    _logger.LogWarning("User does not have access to RoleModuleAccess.");
+                    RedirectToPage("/Index");
+                    return;
+                }
                 RoleModuleAccess = await _roleModuleAccessService.GetAllRoleModuleAccessesAsync();
             }
             catch (Exception ex)
