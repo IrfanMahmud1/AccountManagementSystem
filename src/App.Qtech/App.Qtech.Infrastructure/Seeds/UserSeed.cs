@@ -78,21 +78,6 @@ namespace App.Qtech.Infrastructure.Seeds
                         }
                         else
                         {
-                            foreach(var module in new[] { "ChartOfAccount", "Voucher", "RoleModuleAccess" })
-                            {
-                                foreach(var operation in new[] { "Create", "Edit", "Delete", "View" })
-                                {
-                                    if (!await roleModuleAccessService.CanAcessAsync(adminRoleName, module,operation))
-                                    {
-                                        await roleModuleAccessService.CreateRoleModuleAccessAsync(new RoleModuleAccess
-                                        {
-                                            RoleName = adminRoleName,
-                                            ModuleName = module,
-                                            Operation = operation
-                                        });
-                                    }
-                                }
-                            }
                             logger.LogInformation("Admin user created and assigned role.");
                         }
                     }
