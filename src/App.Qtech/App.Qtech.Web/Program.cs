@@ -57,6 +57,14 @@ try
     }
     #endregion
 
+    #region RoleModuleAccessSeed configuration
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        await RoleModuleAccessSeed.SeedRoleModuleAccessSeedAsync(services);
+    }
+    #endregion
+
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {

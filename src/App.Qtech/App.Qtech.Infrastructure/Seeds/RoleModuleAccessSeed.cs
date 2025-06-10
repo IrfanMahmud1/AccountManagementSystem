@@ -12,7 +12,7 @@ namespace App.Qtech.Infrastructure.Seeds
 {
     public static class RoleModuleAccessSeed
     {
-        public static async Task SeedUserAsync(IServiceProvider serviceProvider)
+        public static async Task SeedRoleModuleAccessSeedAsync(IServiceProvider serviceProvider)
         {
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>()
                                         .CreateLogger("UserSeed");
