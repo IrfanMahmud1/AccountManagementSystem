@@ -37,9 +37,9 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                     _logger.LogWarning("User role not found in claims.");
                     return RedirectToPage("./Index");
                 }
-                if (!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess", "Create"))
+                if (!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess", "Delete"))
                 {
-                    _logger.LogWarning("User does not have access to Create RoleModuleAccess.");
+                    _logger.LogWarning("User does not have access to Delete RoleModuleAccess.");
                     RedirectToPage("./AccessDenied");
                 }
             }
