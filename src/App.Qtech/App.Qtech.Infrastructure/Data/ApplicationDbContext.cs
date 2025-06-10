@@ -16,6 +16,7 @@ namespace App.Qtech.Infrastructure.Data
         public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherEntry> VoucherEntries { get; set; }
+        public DbSet<RoleModuleAccess> RoleModuleAccesses { get; set; }
         public ApplicationDbContext(string connectionString, string migrationAssembly)
         {
             _connectionString = connectionString;
