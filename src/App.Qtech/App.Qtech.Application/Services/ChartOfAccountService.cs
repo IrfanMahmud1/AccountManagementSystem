@@ -54,6 +54,11 @@ namespace App.Qtech.Application.Services
 
             return viewModel;
         }
+
+        public async Task<bool> IsDuplicate(string name)
+        {
+            return await _repository.IsExistAsync(name);
+        }
     }
 
 }

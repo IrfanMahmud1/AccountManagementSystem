@@ -9,7 +9,7 @@ namespace App.Qtech.Domain.Repositories
 {
     public interface IChartOfAccountRepository
     {
-        Task<bool> IsExist(string name);
+        Task<bool> IsExistAsync(string name);
         Task<ChartOfAccount> GetByIdAsync(Guid id);
         Task<List<ChartOfAccount>> GetAllAsync(Guid? id = null);
         Task<List<ChartOfAccount>> GetAllWithNoChildAsync(Guid id);

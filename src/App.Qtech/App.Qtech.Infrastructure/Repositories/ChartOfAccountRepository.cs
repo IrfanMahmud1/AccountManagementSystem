@@ -203,7 +203,7 @@ namespace App.Qtech.Infrastructure.Repositories
             return await command.ExecuteNonQueryAsync() > 0;
         }
 
-        public async Task<bool> IsExist(string name)
+        public async Task<bool> IsExistAsync(string name)
         {
             int count = 0;
 

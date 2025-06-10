@@ -64,6 +64,12 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
             {
                 try
                 {
+                    if(await _chartOfAccountService.IsDuplicate(ChartOfAccount.Name))
+                    {
+                        _logger.LogWarning("Duplicate Account");
+                        TempData["ErrorMessage"] = "An account with this name already exists";
+                        return RedirectToPage("./Index");
+                    }
                     await _chartOfAccountService.UpdateAccountAsync(ChartOfAccount);
                     TempData["SuccessMessage"] = "Account updated successfully";
                     return RedirectToPage("./Index");

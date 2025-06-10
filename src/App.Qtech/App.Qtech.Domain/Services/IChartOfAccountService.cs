@@ -9,6 +9,7 @@ namespace App.Qtech.Domain.Services
 {
     public interface IChartOfAccountService
     {
+        Task<bool> IsDuplicate(string name);
         Task<ChartOfAccount> GetHierarchyAsync(Guid id);
         Task<ChartOfAccount> GetAccountByIdAsync(Guid id);
         Task<List<ChartOfAccount>> GetAllAccountsAsync(Guid? id = null);
