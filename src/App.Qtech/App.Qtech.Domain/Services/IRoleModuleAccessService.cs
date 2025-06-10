@@ -12,7 +12,7 @@ namespace App.Qtech.Domain.Services
         Task<bool> CanAcessAsync(string roleName, string moduleName, string operation);
         Task<List<string>> GetAllModuleNamesByRoleNameAsync(string role);
         Task<IList<RoleModuleAccess>> GetAllRoleModuleAccessesAsync();
-
+        Task<RoleModuleAccess> GetRoleModuleAccessByIdAsync(Guid id);
         Task<bool> CreateRoleModuleAccessAsync(RoleModuleAccess roleModuleAccess);
         Task<bool> EditRoleModuleAccessAsync(RoleModuleAccess roleModuleAccess);
         Task<bool> RemoveRoleModuleAccessAsync(Guid id);

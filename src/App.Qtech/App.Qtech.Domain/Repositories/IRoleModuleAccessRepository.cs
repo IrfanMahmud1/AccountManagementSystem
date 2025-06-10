@@ -12,7 +12,7 @@ namespace App.Qtech.Domain.Repositories
         Task<IList<RoleModuleAccess>> GetAllAsync();
         Task<bool> HasAcess(string role, string module, string operation);
         Task<List<string>> GetAsync(string role);
-
+        Task<RoleModuleAccess> GetByIdAsync(Guid id);
         Task<bool> AddAsync(RoleModuleAccess moduleAccess);
 
         Task<bool> UpdateAsync(RoleModuleAccess moduleAccess);

@@ -45,7 +45,7 @@ namespace App.Qtech.Infrastructure.Repositories
             var roleModuleAccesses = new List<RoleModuleAccess>();
 
             using var connection = new SqlConnection(_connectionString);
-            using var command = new SqlCommand("", connection)
+            using var command = new SqlCommand("sp_ManageRoleModuleAccess", connection)
             {
                 CommandType = CommandType.StoredProcedure,
             };
@@ -74,7 +74,7 @@ namespace App.Qtech.Infrastructure.Repositories
             var modules = new List<string>();
 
             using var connection = new SqlConnection(_connectionString);
-            using var command = new SqlCommand("", connection)
+            using var command = new SqlCommand("sp_ManageRoleModuleAccess", connection)
             {
                 CommandType = CommandType.StoredProcedure,
             };
@@ -99,7 +99,7 @@ namespace App.Qtech.Infrastructure.Repositories
         private async Task<bool> ExecuteNonQueryAsync(RoleModuleAccess roleModuleAccess, RoleModuleAccessAction operation)
         {
             using var connection = new SqlConnection(_connectionString);
-            using var command = new SqlCommand("", connection)
+            using var command = new SqlCommand("sp_ManageRoleModuleAccess", connection)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -123,7 +123,7 @@ namespace App.Qtech.Infrastructure.Repositories
         {
             int count = 0;
             using var connection = new SqlConnection(_connectionString);
-            using var command = new SqlCommand("", connection)
+            using var command = new SqlCommand("sp_ManageRoleModuleAccess", connection)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -144,6 +144,35 @@ namespace App.Qtech.Infrastructure.Repositories
                 count = Convert.ToInt32(result);
             }
             return count > 0;
+        }
+
+        public async Task<RoleModuleAccess> GetByIdAsync(Guid id)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            using var command = new SqlCommand("sp_ManageRoleModuleAccess", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.AddWithValue("@Action", ChartOfAccountAction.Get.ToString());
+            command.Parameters.AddWithValue("@Id", id);
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new RoleModuleAccess
+                {
+                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                    RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
+                    ModuleName = reader.GetString(reader.GetOrdinal("ModuleName")),
+                    Operation = reader.GetString(reader.GetOrdinal("Operation")),
+                    HasAccess = reader.GetBoolean(reader.GetOrdinal("HasAccess"))
+                };
+            }
+
+            return null;
         }
     }
     public enum RoleModuleAccessAction

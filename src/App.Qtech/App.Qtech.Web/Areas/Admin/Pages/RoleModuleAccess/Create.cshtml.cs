@@ -58,7 +58,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
             {
                 var user = await _userManager.GetUserAsync(User);
                 var roles = await _userManager.GetRolesAsync(user);
-                if (roles.len == 0)
+                if (roles.Count == 0)
                 {
                     _logger.LogWarning("User does not have any roles assigned.");
                     return RedirectToPage("/AccessDenied");

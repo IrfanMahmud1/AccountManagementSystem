@@ -42,6 +42,11 @@ namespace App.Qtech.Application.Services
             return await _roleModuleAccessRepository.GetAllAsync();
         }
 
+        public async Task<RoleModuleAccess> GetRoleModuleAccessByIdAsync(Guid id)
+        {
+            return await _roleModuleAccessRepository.GetByIdAsync(id);
+        }
+
         public async Task<bool> RemoveRoleModuleAccessAsync(Guid id)
         {
             return await _roleModuleAccessRepository.DeleteAsync(id);
