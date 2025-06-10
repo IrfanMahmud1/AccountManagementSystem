@@ -39,9 +39,8 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                 }
                 if(!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess"))
                 {
-                    _logger.LogWarning("User does not have access to RoleModuleAccess.");
-                    RedirectToPage("/Index");
-                    return;
+                    _logger.LogWarning("User does not have access to view RoleModuleAccess.");
+                    RedirectToPage("/AccessDenied");
                 }
                 RoleModuleAccess = await _roleModuleAccessService.GetAllRoleModuleAccessesAsync();
             }
