@@ -202,9 +202,33 @@ namespace App.Qtech.Infrastructure.Repositories
             await connection.OpenAsync();
             return await command.ExecuteNonQueryAsync() > 0;
         }
+
+        public async Task<bool> IsExist(string name)
+        {
+            int count = 0;
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = new SqlCommand("sp_countChildAccountsByParentId", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Id", DBNull.Value);
+                command.Parameters.AddWithValue("@Name", name);
+
+                await connection.OpenAsync();
+
+                var result = await command.ExecuteScalarAsync();
+                if (result != null && result != DBNull.Value)
+                {
+                    count = Convert.ToInt32(result);
+                }
+            }
+
+            return count > 0;
+        }
     }
     public enum ChartOfAccountAction
     {
+        IsExist,
         Get,
         GetAll,
         GetAllWithNoChild,
