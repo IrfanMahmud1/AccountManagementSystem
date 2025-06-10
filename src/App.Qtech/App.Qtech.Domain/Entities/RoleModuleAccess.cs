@@ -14,5 +14,6 @@ namespace App.Qtech.Domain.Entities
         public string RoleName { get; set; }
         public string ModuleName { get; set; }
         public bool HasAccess { get; set; }
+        public string Operation { get; set; } // Create, Update, Delete, View
     }
 }

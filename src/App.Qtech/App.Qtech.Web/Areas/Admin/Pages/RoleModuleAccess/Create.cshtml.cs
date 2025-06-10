@@ -25,7 +25,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
         }
 
         [BindProperty]
-        public RoleModuleAccess RoleModuleAccess { get; set; } = default!;
+        public App.Qtech.Domain.Entities.RoleModuleAccess RoleModuleAccess { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
