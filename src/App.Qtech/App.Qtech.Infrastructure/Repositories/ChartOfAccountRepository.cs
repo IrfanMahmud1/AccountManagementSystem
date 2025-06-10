@@ -17,7 +17,7 @@ namespace App.Qtech.Infrastructure.Repositories
 {
     public class ChartOfAccountRepository : IChartOfAccountRepository
     {
-        private readonly string _connectionString;
+        private readonly string? _connectionString;
 
         public ChartOfAccountRepository(IConfiguration configuration)
         {

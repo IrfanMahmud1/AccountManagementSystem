@@ -14,7 +14,7 @@ namespace App.Qtech.Infrastructure.Repositories
 {
     public class VoucherRepository : IVoucherRepository
     {
-        private readonly string _connectionString;
+        private readonly string? _connectionString;
 
         public VoucherRepository(IConfiguration configuration)
         {
