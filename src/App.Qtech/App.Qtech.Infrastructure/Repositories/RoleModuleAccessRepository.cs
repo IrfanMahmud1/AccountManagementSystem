@@ -1,5 +1,6 @@
 ﻿using App.Qtech.Domain.Entities;
 using App.Qtech.Domain.Repositories;
+using Azure;
 using Azure.Core;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -117,6 +118,26 @@ namespace App.Qtech.Infrastructure.Repositories
             await connection.OpenAsync();
             return await command.ExecuteNonQueryAsync() > 0;
         }
+
+        public async Task<bool> HasAcess(string role, string module)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            using var command = new SqlCommand("", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.AddWithValue("@Action", RoleModuleAccessAction.CheckAccess.ToString());
+            command.Parameters.AddWithValue("@Id", DBNull.Value);
+
+            command.Parameters.AddWithValue("@RoleName", string.IsNullOrEmpty(role) 
+                ? (object)DBNull.Value : role);
+            command.Parameters.AddWithValue("@ModuleName", string.IsNullOrEmpty(module) 
+                ? (object)DBNull.Value : module);
+
+            await connection.OpenAsync();
+            return await command.ExecuteNonQueryAsync() > 0;
+        }
     }
     public enum RoleModuleAccessAction
     {
@@ -124,7 +145,8 @@ namespace App.Qtech.Infrastructure.Repositories
         GetAll,
         Create,
         Update,
-        Delete
+        Delete,
+        CheckAccess
     }
 }
 

@@ -7,23 +7,43 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Infrastructure.Data;
+using App.Qtech.Domain.Repositories;
+using App.Qtech.Domain.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
     public class IndexModel : PageModel
     {
-        private readonly App.Qtech.Infrastructure.Data.ApplicationDbContext _context;
+        private readonly IRoleModuleAccessService _roleModuleAccessService;
+        private readonly ILogger<IndexModel> _logger;   
 
-        public IndexModel(App.Qtech.Infrastructure.Data.ApplicationDbContext context)
+        public IndexModel(IRoleModuleAccessService roleModuleAccessService, ILogger<IndexModel> logger)
         {
-            _context = context;
+            _roleModuleAccessService = roleModuleAccessService;
+            _logger = logger;
         }
 
         public IList<App.Qtech.Domain.Entities.RoleModuleAccess> RoleModuleAccess { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            RoleModuleAccess = await _context.RoleModuleAccesses.ToListAsync();
+            try
+            {
+                var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                if(role == null)
+                {
+                    _logger.LogWarning("User role not found in claims.");
+                    return;
+                }
+                
+                RoleModuleAccess = await _roleModuleAccessService.GetAllRoleModuleAccessesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve RoleModuleAccesses");
+            }
         }
     }
 }

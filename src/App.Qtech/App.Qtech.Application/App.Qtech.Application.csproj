@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Services\RoleModuleAccessService.cs~RF345f905d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\App.Qtech.Domain\App.Qtech.Domain.csproj" />
   </ItemGroup>
 
