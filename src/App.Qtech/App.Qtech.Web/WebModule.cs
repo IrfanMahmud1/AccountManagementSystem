@@ -33,6 +33,10 @@ namespace App.Qtech.Web
                 .InstancePerLifetimeScope();
             builder.RegisterType<VoucherService>().As<IVoucherService>()
                .InstancePerLifetimeScope();
+            builder.RegisterType<RoleModuleAccessRepository>().As<IRoleModuleAccessRepository>()
+             .InstancePerLifetimeScope();
+            builder.RegisterType<RoleModuleAccessService>().As<IRoleModuleAccessService>()
+               .InstancePerLifetimeScope();
             base.Load(builder);
         }
     }
