@@ -45,7 +45,18 @@
             @for (int i = 0; i < Model.VoucherVM.Entries.Count; i++)
             {
                 <tr>
-                    <td><input name="VoucherVM.Entries[@i].AccountName" class="form-control" /></td>
+                    <td>
+                        <select name="VoucherVM.Entries[@i].AccountName" class="form-control">
+                            <option value="">-- Select Account --</option>
+                            @foreach (var account in Model.Accounts)
+                            {
+                                <option value="@account.Name" selected="@(Model.VoucherVM.Entries[i].AccountName == account.Name)">
+                                    @account.Name
+                                </option>
+                            }
+                        </select>
+                    </td>
+
                     <td><input name="VoucherVM.Entries[@i].Debit" class="form-control" type="number" step="0.01" /></td>
                     <td><input name="VoucherVM.Entries[@i].Credit" class="form-control" type="number" step="0.01" /></td>
                     <td><button type="button" class="btn btn-danger btn-sm remove-row">X</button></td>
@@ -61,11 +72,19 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+        var accountOptions = `@Html.Raw(string.Join("", Model.Accounts.Select(a => $"<option value='{a.Name}'>{a.Name}</option>")))`;
+    </script>
+    <script>
         document.getElementById("add-row").addEventListener("click", function () {
             let index = document.querySelectorAll("#entry-rows tr").length;
             let row = `
                 <tr>
-                    <td><input name="VoucherVM.Entries[${index}].AccountName" class="form-control" /></td>
+                    <td>
+                        <select name="VoucherVM.Entries[${index}].AccountName" class="form-control">
+                            <option value="">-- Select Account --</option>
+                            ${accountOptions}
+                        </select>
+                    </td>
                     <td><input name="VoucherVM.Entries[${index}].Debit" class="form-control" type="number" step="0.01" /></td>
                     <td><input name="VoucherVM.Entries[${index}].Credit" class="form-control" type="number" step="0.01" /></td>
                     <td><button type="button" class="btn btn-danger btn-sm remove-row">X</button></td>
@@ -80,3 +99,4 @@
         });
     </script>
 }
+

@@ -12,7 +12,7 @@
         @foreach(var module in Model.Modules)
         {
             var action = $"/{module}/Index";
-            <a asp-area="Admin" asp-page="@action" class="btn btn-primary">module</a>
+            <a asp-area="Admin" asp-page="@action" class="btn btn-primary">@module</a>
         }
     }
 </div>

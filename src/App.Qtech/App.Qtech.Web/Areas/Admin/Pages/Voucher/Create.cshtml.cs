@@ -15,15 +15,20 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
         private readonly IVoucherService _voucherService;
         private readonly IRoleModuleAccessService _roleModuleAccessService;
         private readonly ILogger<CreateModel> _logger;
+        private readonly IChartOfAccountService _chartOfAccountService;
 
         [BindProperty]
         public CreateVoucherModel VoucherVM { get; set; }
-
-        public CreateModel(IVoucherService voucherService, IRoleModuleAccessService roleModuleAccessService, ILogger<CreateModel> logger)
+        public List<App.Qtech.Domain.Entities.ChartOfAccount> Accounts { get; set; } = new();
+        public CreateModel(IVoucherService voucherService, 
+            IRoleModuleAccessService roleModuleAccessService, 
+            ILogger<CreateModel> logger,
+            IChartOfAccountService chartOfAccountService)
         {
             _voucherService = voucherService;
             _roleModuleAccessService = roleModuleAccessService;
             _logger = logger;
+            _chartOfAccountService = chartOfAccountService;
         }
 
         public async Task<IActionResult> OnGet()
@@ -54,6 +59,15 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
                 new VoucherEntry() // one row by default
             }
             };
+            try
+            {
+                Accounts = await _chartOfAccountService.GetAllAccountsAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to load chart of accounts.");
+                ModelState.AddModelError(string.Empty, "Failed to load accounts. Please try again later.");
+            }
             return Page();
         }
 
