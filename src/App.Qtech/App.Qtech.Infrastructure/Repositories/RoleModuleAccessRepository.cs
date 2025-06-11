@@ -89,7 +89,10 @@ namespace App.Qtech.Infrastructure.Repositories
 
             while (await reader.ReadAsync())
             {
-                modules.Add(reader.GetString(0));
+                if (!reader.IsDBNull(0))
+                {
+                    modules.Add(reader.GetString(0));
+                }
             }
 
             return modules;
