@@ -44,7 +44,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                 if (!await _roleModuleAccessService.CanAcessAsync(role, "ChartOfAccount", "Create"))
                 {
                     _logger.LogWarning("User does not have access to Create RoleModuleAccess.");
-                    RedirectToPage("./AccessDenied");
+                    return RedirectToPage("./AccessDenied");
                 }
             }
             catch (Exception ex)

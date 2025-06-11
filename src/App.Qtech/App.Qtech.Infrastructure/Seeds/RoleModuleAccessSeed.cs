@@ -24,11 +24,12 @@ namespace App.Qtech.Infrastructure.Seeds
                 {
                     foreach (var operation in new[] { "Create", "Update", "Delete", "View" })
                     {
-                        if (module == "Voucher" && operation == "Update" || operation == "Delete")
+                        if (module.Contains("Voucher") && (operation == "Update" || operation == "Delete"))
                         {
                             continue;
                         }
-                        if (module == "Dashboard" && operation == "Update" || operation == "Delete" || operation == "Create")
+                        if (module.Contains("Dashboard") && (operation == "Update" || 
+                            operation == "Delete" || operation == "Create"))
                         {
                             continue;
                         }

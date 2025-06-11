@@ -50,7 +50,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                 if (!await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess", "Update"))
                 {
                     _logger.LogWarning("User does not have access to update RoleModuleAccess.");
-                    RedirectToPage("./AccessDenied");
+                    return RedirectToPage("./AccessDenied");
                 }
             }
             catch (Exception ex)

@@ -32,7 +32,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
                 if (!await _roleModuleAccessService.CanAcessAsync(role, "Voucher", "View"))
                 {
                     _logger.LogWarning("User does not have access to View Voucher.");
-                    RedirectToPage("./AccessDenied");
+                    return RedirectToPage("./AccessDenied");
                 }
             }
             catch (Exception ex)

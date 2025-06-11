@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="appsettings.json~RF17b25a15.TMP" />
+    <None Remove="Areas\Admin\Pages\ChartOfAccount\ccpduid4.wcq~" />
     <None Remove="Areas\Admin\Pages\ChartOfAccount\Create.cshtml~RF10506b25.TMP" />
     <None Remove="Areas\Admin\Pages\ChartOfAccount\Details.cshtml~RF17c95543.TMP" />
     <None Remove="Areas\Admin\Pages\ChartOfAccount\Details.cshtml~RF18a5f8e7.TMP" />

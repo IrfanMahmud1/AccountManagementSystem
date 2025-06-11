@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
+namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
     [Authorize]
     public class AccessDeniedModel : PageModel
