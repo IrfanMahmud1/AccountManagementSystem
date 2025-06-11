@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Qtech.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250611091441_AddVoucherDetailsView")]
-    partial class AddVoucherDetailsView
+    [Migration("20250611093259_AddVoucherEntryTableType")]
+    partial class AddVoucherEntryTableType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

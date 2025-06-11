@@ -11,7 +11,7 @@ namespace App.Qtech.Web.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             var sql = """"
-                                CREATE   VIEW [dbo].[vw_VoucherDetails] AS
+                CREATE   VIEW [dbo].[vw_VoucherDetails] AS
                 SELECT 
                     v.Date,
                     v.ReferenceNo,
