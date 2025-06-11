@@ -2,12 +2,14 @@ using App.Qtech.Application.Services;
 using App.Qtech.Domain.Entities;
 using App.Qtech.Domain.Services;
 using App.Qtech.Web.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IVoucherService _voucherService;

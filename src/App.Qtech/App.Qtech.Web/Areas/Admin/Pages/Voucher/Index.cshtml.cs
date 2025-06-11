@@ -1,12 +1,14 @@
 using App.Qtech.Application.Services;
 using App.Qtech.Domain.Dtos;
 using App.Qtech.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IVoucherService _voucherService;
