@@ -42,7 +42,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
                 if (!await _roleModuleAccessService.CanAcessAsync(role, "ChartOfAccount", "View"))
                 {
                     _logger.LogWarning("User does not have access to View RoleModuleAccess.");
-                    return RedirectToPage("./AccessDenied");
+                    return RedirectToPage("/AccessDenied");
                 }
             }
             catch (Exception ex)
