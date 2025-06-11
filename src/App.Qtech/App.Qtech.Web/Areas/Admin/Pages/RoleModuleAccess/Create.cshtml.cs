@@ -87,11 +87,11 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                 try
                 {
                     var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-                    if(await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess", "Create"))
+                    if(await _roleModuleAccessService.CanAcessAsync(role, RoleModuleAccess.ModuleName,RoleModuleAccess.Operation))
                     {
                         _logger.LogWarning("User already have access to create RoleModuleAccess.");
                         TempData["ErrorMessage"] = "You already have access to create Role Module Access.";
-                        return RedirectToPage("./Index");
+                        return Page();
                     }
                     await _roleModuleAccessService.CreateRoleModuleAccessAsync(RoleModuleAccess);
                     TempData["SuccessMessage"] = "Role Module Access created successfully.";

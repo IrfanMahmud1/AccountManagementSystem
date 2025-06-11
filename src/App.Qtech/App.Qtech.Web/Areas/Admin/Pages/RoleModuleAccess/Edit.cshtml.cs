@@ -88,7 +88,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                 try
                 {
                     var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-                    if (await _roleModuleAccessService.CanAcessAsync(role, "RoleModuleAccess", "Edit"))
+                    if (await _roleModuleAccessService.CanAcessAsync(role, RoleModuleAccess.ModuleName,RoleModuleAccess.Operation))
                     {
                         _logger.LogWarning("User already have access to edit RoleModuleAccess.");
                         TempData["ErrorMessage"] = "User already have access to edit Role Module Access.";
