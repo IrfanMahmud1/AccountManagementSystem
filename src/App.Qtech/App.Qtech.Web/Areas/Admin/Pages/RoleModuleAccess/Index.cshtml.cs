@@ -12,6 +12,7 @@ using App.Qtech.Domain.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Authorization;
+using App.Qtech.Domain.ValueObjects;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
 {
@@ -27,9 +28,9 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
             _logger = logger;
         }
 
-        public IList<App.Qtech.Domain.Entities.RoleModuleAccess> RoleModuleAccess { get;set; } = default!;
+        public PagedResult<App.Qtech.Domain.Entities.RoleModuleAccess> RoleModuleAccess { get;set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
                     _logger.LogWarning("User does not have access to view RoleModuleAccess.");
                     return RedirectToPage("/AccessDenied");
                 }
-                RoleModuleAccess = await _roleModuleAccessService.GetAllRoleModuleAccessesAsync();
+                RoleModuleAccess = await _roleModuleAccessService.GetPaginatedRoleModuleAccesses(pageNumber,pageSize);
             }
             catch (Exception ex)
             {
