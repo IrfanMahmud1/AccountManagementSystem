@@ -26,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var row in Model.VoucherRows)
+        @foreach (var row in Model.VoucherRows.Items)
         {
             <tr>
                 <td>@row.Date.ToShortDateString()</td>
@@ -39,3 +39,34 @@
         }
     </tbody>
 </table>
+
+<div>
+    Page @(Model.VoucherRows.PageNumber) of @(Model.VoucherRows.TotalPages)
+
+    <div class="flex text-center items-center space-x-2 my4-">
+        @if (Model.VoucherRows.PageNumber > 1)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(Model.VoucherRows.PageNumber - 1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</a>
+        }
+
+        @for (int i = 1; i <= Model.VoucherRows.TotalPages; i++)
+        {
+            if (i == Model.VoucherRows.PageNumber)
+            {
+                <strong class="px-3 py-1 bg-blue-500 rounded">@i</strong>
+            }
+            else
+            {
+                <a asp-action="Index" asp-route-pageNumber="@i" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">@i</a>
+            }
+        }
+
+        @if (Model.VoucherRows.PageNumber < Model.VoucherRows.TotalPages)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(Model.VoucherRows.PageNumber + 1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+        }
+    </div>
+</div>
+<div class="card-footer text-muted">
+    Total VoucherRows: @Model.VoucherRows.Items.Count
+</div>

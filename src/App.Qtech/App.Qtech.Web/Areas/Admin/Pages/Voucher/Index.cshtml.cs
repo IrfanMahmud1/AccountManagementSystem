@@ -1,6 +1,7 @@
 using App.Qtech.Application.Services;
 using App.Qtech.Domain.Dtos;
 using App.Qtech.Domain.Services;
+using App.Qtech.Domain.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,8 +21,8 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
             _logger = logger;
             _roleModuleAccessService = roleModuleAccessService;
         }
-        public List<VoucherDisplayDto> VoucherRows { get; set; } = new();
-        public async Task<IActionResult> OnGet()
+        public PagedResult<VoucherDisplayDto> VoucherRows { get; set; } = new();
+        public async Task<IActionResult> OnGet(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
             }
             try
             {
-                VoucherRows = await _voucherService.GetAllVouchersAsync();
+                VoucherRows = await _voucherService.GetAllVouchersAsync(pageNumber,pageSize);
             }
             catch (Exception ex)
             {
