@@ -1,4 +1,5 @@
 ﻿using App.Qtech.Domain.Entities;
+using App.Qtech.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace App.Qtech.Domain.Services
 {
     public interface IRoleModuleAccessService
     {
+        Task<PagedResult<RoleModuleAccess>> GetPaginatedRoleModuleAccesses(int pageNumber, int pageSize);
         Task<bool> CanAcessAsync(string roleName, string moduleName, string operation);
         Task<List<string>> GetAllModuleNamesByRoleNameAsync(string role);
         Task<IList<RoleModuleAccess>> GetAllRoleModuleAccessesAsync();
