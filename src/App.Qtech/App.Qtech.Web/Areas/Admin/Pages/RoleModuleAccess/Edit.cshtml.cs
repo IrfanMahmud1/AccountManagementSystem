@@ -57,25 +57,9 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
             {
                 _logger.LogError(ex, "Failed to check user access for RoleModuleAccess updation.");
             }
-            try 
+            if (!await Assign())
             {
-                RoleModuleAccess = await _roleModuleAccessService.GetRoleModuleAccessByIdAsync(id);
-                var roles = await _roleManager.Roles.ToListAsync();
-                if (roles.Count == 0)
-                {
-                    _logger.LogWarning("User does not have any roles assigned.");
-                    return RedirectToPage("/AccessDenied");
-                }
-                foreach (var role in roles)
-                {
-                    Roles.Add(role.Name);
-                }
-                Modules = new List<string> { "ChartOfAccount", "Voucher", "RoleModuleAccess" }; // Replace with actual module retrieval logic
-                Operations = new List<string> { "View", "Create", "Update", "Delete" }; // Replace with actual module retrieval logic
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to retrieve roles for RoleModuleAccess updation.");
+                return RedirectToPage("/AccessDenied");
             }
             return Page();
         }
@@ -87,11 +71,11 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
             {
                 try
                 {
-                    var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-                    if (await _roleModuleAccessService.CanAcessAsync(role, RoleModuleAccess.ModuleName,RoleModuleAccess.Operation))
+                    if (await _roleModuleAccessService.CanAcessAsync(RoleModuleAccess.RoleName, RoleModuleAccess.ModuleName,RoleModuleAccess.Operation))
                     {
                         _logger.LogWarning("User already have access to edit RoleModuleAccess.");
                         TempData["ErrorMessage"] = "User already have access to edit Role Module Access.";
+                        await Assign();
                         return Page();
                     }
                     await _roleModuleAccessService.EditRoleModuleAccessAsync(RoleModuleAccess);
@@ -106,6 +90,33 @@ namespace App.Qtech.Web.Areas.Admin.Pages.RoleModuleAccess
             }
 
             return Page();
+        }
+
+        private async Task<bool> Assign()
+        {
+            try
+            {
+                var roles = await _roleManager.Roles.ToListAsync();
+                if (roles.Count == 0)
+                {
+                    _logger.LogWarning("User does not have any roles assigned.");
+                    TempData["ErrorMessage"] = "User does not have any roles assigned.";
+                    return false;
+                }
+                foreach (var role in roles)
+                {
+                    Roles.Add(role.Name);
+                }
+                Modules = new List<string> { "ChartOfAccount", "Voucher", "RoleModuleAccess" }; // Replace with actual module retrieval logic
+                Operations = new List<string> { "View", "Create", "Update", "Delete" }; // Replace with actual module retrieval logic
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve roles for RoleModuleAccess creation.");
+                TempData["ErrorMessage"] = "An error occurred while retrieving roles for Role Module Access creation. Please try again.";
+                return false;
+            }
+            return true;
         }
     }
 }
