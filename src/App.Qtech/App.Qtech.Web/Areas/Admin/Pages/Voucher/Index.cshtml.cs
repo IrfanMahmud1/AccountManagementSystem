@@ -44,7 +44,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.Voucher
             }
             try
             {
-                VoucherRows = await _voucherService.GetAllVouchersAsync(pageNumber,pageSize);
+                VoucherRows = await _voucherService.GetAllPaginatedVouchersAsync(pageNumber,pageSize);
             }
             catch (Exception ex)
             {

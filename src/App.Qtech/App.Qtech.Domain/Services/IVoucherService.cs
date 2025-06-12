@@ -12,6 +12,6 @@ namespace App.Qtech.Domain.Services
     public interface IVoucherService
     {
         Task SaveVoucherAsync(Voucher voucher);
-        Task<PagedResult<VoucherDisplayDto>> GetAllPaginatedVouchersAsync(int pageNumber, int pageSize)
+        Task<PagedResult<VoucherDisplayDto>> GetAllPaginatedVouchersAsync(int pageNumber, int pageSize);
     }
 }

@@ -31,8 +31,6 @@ A lightweight accounting system built with **ASP.NET Core Razor Pages** and **MS
 
 ## 🧑‍💼 User & Role Management
 
-- Add, edit, and delete users
-- Create and manage roles (`Admin`, `Accountant`, `Viewer`)
 - Assign role permissions via `sp_ManageRoleModuleAccess`
 
 🖼️ Screenshot:
