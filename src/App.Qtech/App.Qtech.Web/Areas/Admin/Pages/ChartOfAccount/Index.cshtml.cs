@@ -11,6 +11,7 @@ using App.Qtech.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using App.Qtech.Application.Services;
 using System.Security.Claims;
+using App.Qtech.Domain.ValueObjects;
 
 namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
 {
@@ -27,9 +28,9 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
             _roleModuleAccessService = roleModuleAccessService;
         }
 
-        public IList<App.Qtech.Domain.Entities.ChartOfAccount> ChartOfAccount { get;set; } = default!;
+        public PagedResult<App.Qtech.Domain.Entities.ChartOfAccount> ChartOfAccount { get;set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int pageNumber = 1,int pageSize = 10)
         {
             try
             {
@@ -51,7 +52,7 @@ namespace App.Qtech.Web.Areas.Admin.Pages.ChartOfAccount
             }
             try
             {
-                ChartOfAccount = await _chartOfAccountService.GetAllAccountsAsync();
+                ChartOfAccount = await _chartOfAccountService.GetPaginatedChartOfAccounts(pageNumber,pageSize);
             }
             catch (Exception ex)
             {

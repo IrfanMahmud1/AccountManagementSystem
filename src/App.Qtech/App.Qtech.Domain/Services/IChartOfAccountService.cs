@@ -1,4 +1,5 @@
 ﻿using App.Qtech.Domain.Entities;
+using App.Qtech.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace App.Qtech.Domain.Services
 {
     public interface IChartOfAccountService
     {
+        Task<PagedResult<ChartOfAccount>> GetPaginatedChartOfAccounts(int pageNumber,int pageSize);
         Task<bool> IsDuplicate(string name);
         Task<ChartOfAccount> GetHierarchyAsync(Guid id);
         Task<ChartOfAccount> GetAccountByIdAsync(Guid id);

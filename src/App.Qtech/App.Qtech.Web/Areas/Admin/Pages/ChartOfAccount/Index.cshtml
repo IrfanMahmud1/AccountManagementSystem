@@ -19,25 +19,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ChartOfAccount[0].Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChartOfAccount[0].ParentId)
+                ParentId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChartOfAccount[0].AccountType)
+                AccountType
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChartOfAccount[0].IsActive)
+                IsActive
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChartOfAccount[0].CreatedAt)
+                CreatedAt
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ChartOfAccount) {
+@foreach (var item in Model.ChartOfAccount.Items) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -63,3 +63,33 @@
 }
     </tbody>
 </table>
+<div>
+    Page @(Model.ChartOfAccount.PageNumber) of @(Model.ChartOfAccount.TotalPages)
+
+    <div class="flex text-center items-center space-x-2 my4-">
+        @if (Model.ChartOfAccount.PageNumber > 1)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(Model.ChartOfAccount.PageNumber - 1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</a>
+        }
+
+        @for (int i = 1; i <= Model.ChartOfAccount.TotalPages; i++)
+        {
+            if (i == Model.ChartOfAccount.PageNumber)
+            {
+                <strong class="px-3 py-1 bg-blue-500 rounded">@i</strong>
+            }
+            else
+            {
+                <a asp-action="Index" asp-route-pageNumber="@i" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">@i</a>
+            }
+        }
+
+        @if (Model.ChartOfAccount.PageNumber < Model.ChartOfAccount.TotalPages)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(Model.ChartOfAccount.PageNumber + 1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+        }
+    </div>
+</div>
+<div class="card-footer text-muted">
+    Total ChartOfAccounts: @Model.ChartOfAccount.Items.Count
+</div>

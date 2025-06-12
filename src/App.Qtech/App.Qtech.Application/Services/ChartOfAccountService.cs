@@ -1,6 +1,9 @@
 ﻿using App.Qtech.Domain.Entities;
 using App.Qtech.Domain.Repositories;
 using App.Qtech.Domain.Services;
+using App.Qtech.Domain.ValueObjects;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +15,12 @@ namespace App.Qtech.Application.Services
     public class ChartOfAccountService : IChartOfAccountService
     {
         private readonly IChartOfAccountRepository _repository;
-
-        public ChartOfAccountService(IChartOfAccountRepository repository)
+        private ILogger<ChartOfAccountService> _logger;
+        public ChartOfAccountService(IChartOfAccountRepository repository,
+            ILogger<ChartOfAccountService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public async Task<ChartOfAccount> GetAccountByIdAsync(Guid id) => await _repository.GetByIdAsync(id);
@@ -58,6 +63,36 @@ namespace App.Qtech.Application.Services
         public async Task<bool> IsDuplicate(string name)
         {
             return await _repository.IsExistAsync(name);
+        }
+
+        public async Task<PagedResult<ChartOfAccount>> GetPaginatedChartOfAccounts(int pageNumber, int pageSize)
+        {
+            if (pageNumber <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number must be greater than zero.");
+            try
+            {
+                var accounts = await _repository.GetAllAsync();
+                var totalItems = accounts.Count;
+
+                accounts = accounts.OrderBy(a => a.Name)
+                                    .Skip((pageNumber - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToList();
+
+                return new PagedResult<ChartOfAccount>
+                {
+                    Items = accounts.ToList(),
+                    TotalItems = totalItems,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,"Failed to retrieve accounts");
+                throw new InvalidOperationException("An error occurred while fetching paginated accounts.", ex);
+            }
+            
         }
     }
 
