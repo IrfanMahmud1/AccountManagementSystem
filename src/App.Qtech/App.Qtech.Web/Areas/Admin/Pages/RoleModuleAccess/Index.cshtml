@@ -20,21 +20,21 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoleModuleAccess[0].RoleName)
+                RoleName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoleModuleAccess[0].ModuleName)
+                ModuleName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoleModuleAccess[0].HasAccess)
+                HasAccess
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoleModuleAccess[0].Operation)
+                Operation
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.RoleModuleAccess) {
+@foreach (var item in Model.RoleModuleAccess.Items) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.RoleName)
@@ -56,3 +56,33 @@
 }
     </tbody>
 </table>
+<div>
+    Page @(Model.RoleModuleAccess.PageNumber) of @(Model.RoleModuleAccess.TotalPages)
+
+    <div class="flex text-center items-center space-x-2 my4-">
+        @if (Model.RoleModuleAccess.PageNumber > 1)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(Model.RoleModuleAccess.PageNumber - 1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</a>
+        }
+
+        @for (int i = 1; i <= Model.RoleModuleAccess.TotalPages; i++)
+        {
+            if (i == Model.RoleModuleAccess.PageNumber)
+            {
+                <strong class="px-3 py-1 bg-blue-500 rounded">@i</strong>
+            }
+            else
+            {
+                <a asp-action="Index" asp-route-pageNumber="@i" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">@i</a>
+            }
+        }
+
+        @if (Model.RoleModuleAccess.PageNumber < Model.RoleModuleAccess.TotalPages)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(Model.RoleModuleAccess.PageNumber + 1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+        }
+    </div>
+</div>
+<div class="card-footer text-muted">
+    Total RoleModuleAccesss: @Model.RoleModuleAccess.Items.Count
+</div>
