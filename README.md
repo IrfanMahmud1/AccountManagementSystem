@@ -34,7 +34,13 @@ A lightweight accounting system built with **ASP.NET Core Razor Pages** and **MS
 - Assign role permissions via `sp_ManageRoleModuleAccess`
 
 🖼️ Screenshot:
-![User & Role Management](screenshots/user-role-management.png)
+![User & Role Management](/docs/screenshots/AccessByAdmin.bmp)
+![User & Role Management](/docs/screenshots/AccessByViewer.bmp)
+![User & Role Management](/docs/screenshots/AccessByCOA.bmp)
+![User & Role Management](/docs/screenshots/RoleModuleAccessList.bmp)
+![User & Role Management](/docs/screenshots/CreateRMA.bmp)
+![User & Role Management](/docs/screenshots/EditRMA.bmp)
+![User & Role Management](/docs/screenshots/DeleteRMA.bmp)
 
 ---
 
@@ -46,7 +52,9 @@ A lightweight accounting system built with **ASP.NET Core Razor Pages** and **MS
 - All operations handled by `sp_ManageChartOfAccounts`
 
 🖼️ Screenshot:
-![Chart of Accounts Tree](screenshots/chart-of-accounts-tree.png)
+![Chart of Accounts Tree](/docs/screenshots/ChartOfAccountList.bmp)
+![Chart of Accounts Tree](/docs/screenshots/CreateCOA.bmp)
+![Chart of Accounts Tree](/docs/screenshots/EditCOA.bmp)
 
 ---
 
@@ -70,7 +78,8 @@ Supports the following voucher types:
 - `sp_SaveVoucher` for inserting vouchers and associated debit/credit lines
 
 🖼️ Screenshot:
-![Voucher Entry Form](screenshots/voucher-entry-form.png)
+![Voucher Entry Form](/docs/screenshots/VoucherLIst.bmp)
+![Voucher Entry Form](/docs/screenshots/CreateVoucher.bmp)
 
 ---
 
@@ -85,7 +94,7 @@ To improve performance and user experience when working with large datasets (e.g
 - Efficient page loading with stored procedures such as `sp_GetPaginatedVouchers`
 
 🖼️ Screenshot:
-![Pagination Example](screenshots/pagination-example.png)
+![Pagination Example](/docs/screenshots/Pagination.bmp)
 
 ---
 

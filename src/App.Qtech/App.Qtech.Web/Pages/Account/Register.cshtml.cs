@@ -88,12 +88,12 @@ namespace App.Qtech.Web.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Name = Input.UserName;
+                user.SecurityStamp = Guid.NewGuid().ToString();
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
-                await _userManager.AddToRoleAsync(user, "Viewer");
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Viewer");
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
